@@ -18,7 +18,10 @@ MonoBehaviour:
   protectionProbability: 0.01
   protectionDuration: 5
   protectionCooldown: 15
-  allShapesToSpawn: []
+  circleInstancesToSpawn: []
   systemsEnabled:
-    keys: []
-    values: 
+    keys:
+    - SpawnCircleComponent
+    - SpawnCirclesComponent
+    - SpawnCirclesSystem
+    values: 010101
