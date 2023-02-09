@@ -1,19 +1,23 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace mouvementSystem
+namespace mouvementSystems
 {
 
     public class MouvementSystem : ISystem
     {
-        private List<PositionComponent> components;
+        public Dictionary<uint, PositionComponent> circlesPosition;
+        public Dictionary<uint, SpeedComponent> circlesSpeed;
+        public Dictionary<uint, DynamicComponent> circlesIsDynamic;
 
         public string Name { get; private set; }
         public MouvementSystem(string name)
         {
             Name = name;
-            components = new List<PositionComponent>();
+            circlesPosition = new Dictionary<uint, PositionComponent>();
+            circlesSpeed = new Dictionary<uint, SpeedComponent>();
         }
 
         public void UpdateSystem()

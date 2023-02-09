@@ -133,6 +133,12 @@ public class ECSManager : MonoBehaviour
     {
         foreach (var id in _nextColorUpdate.Keys)
         {
+            if (!_spriteRenderersCache.ContainsKey(id))
+            {
+                _nextColorToDelete.Push(id);
+                continue;
+            }
+            
             var currentColor = _spriteRenderersCache[id].color;
             _spriteRenderersCache[id].color = Color.Lerp(currentColor, _nextColorUpdate[id], Time.deltaTime * ColorUpdateSpeed);
 
