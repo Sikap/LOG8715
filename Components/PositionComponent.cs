@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PositionComponent
+public struct PositionComponent
 {
-    Vector2 Position;
+    public Vector2 position;
 }

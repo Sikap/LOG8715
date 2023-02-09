@@ -3,24 +3,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ResizeSystems
+namespace resizeSystems
 {
-
     public class ResizeSystem : ISystem
     {
-        public Dictionary<uint, SizeComponent> circlesSize;
+        public static Dictionary<uint, SizeComponent> circlesSize = new Dictionary<uint,SizeComponent>();
 
         public string Name { get; private set; }
         public ResizeSystem(string name)
         {
             Name = name;
-            circlesSize = new Dictionary<uint, SizeComponent>();
         }
 
         public void UpdateSystem()
         {
             // processing logic here
-
         }
     }
 }

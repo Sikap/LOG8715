@@ -2,9 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SizeComponent
+public struct SizeComponent
 {
-    uint size;
+    public int size;
 }
-
-

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CollisionComponent
+public struct CollisionComponent
 {
-    bool isCollision;
+    public bool isCollision;
 }

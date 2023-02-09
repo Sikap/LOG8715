@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpeedComponent
+public struct SpeedComponent
 {
-    Vector2 speed;
+    public Vector2 speed;
 }
 
