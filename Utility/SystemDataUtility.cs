@@ -5,6 +5,38 @@ using ResizeSystem = resizeSystems;
 public class SystemDataUtility
 {
     public static uint id = 1;
+
+    public static uint GetReservedId() {
+        return id++;
+    }
+
+    public static void CreateCircle(uint id, Vector2 position, int size) {
+        global::ECSManager ecsManager = global::ECSManager.Instance;
+        ecsManager.CreateShape(id, size);
+        ecsManager.UpdateShapePosition(id, position);
+    }
+
+    public static void DestroyShape(uint id) {
+        global::ECSManager ecsManager = global::ECSManager.Instance;
+        ecsManager.DestroyShape(id);
+    }
+
+    public static void UpdateShape(uint id, Vector2 position, int size) {
+        global::ECSManager ecsManager = global::ECSManager.Instance;
+        ecsManager.UpdateShapeSize(id, size);
+        ecsManager.UpdateShapePosition(id, position);
+    }
+
+    public static void UpdateShapeSize(uint id, int size) {
+        global::ECSManager ecsManager = global::ECSManager.Instance;
+        ecsManager.UpdateShapeSize(id, size);
+    }
+
+    public static void UpdateShapePosition(uint id, Vector2 position) {
+        global::ECSManager ecsManager = global::ECSManager.Instance;
+        ecsManager.UpdateShapePosition(id, position);
+    }
+
     public static uint AddShapeDataToSystems(int shapeSize, Vector2 shapePosition, Vector2 shapeSpeed) {
         id++;
         if (!ResizeSystem.ResizeSystem.circlesSize.ContainsKey(id))

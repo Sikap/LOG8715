@@ -24,4 +24,6 @@ MonoBehaviour:
     - SpawnCircleComponent
     - SpawnCirclesComponent
     - SpawnCirclesSystem
-    values: 010101
+    - MovementSystem
+    - CollisionSystem
+    values: 0101010101

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using CollisionSystem = collisionSystems;
 
 namespace resizeSystems
 {
@@ -17,7 +18,13 @@ namespace resizeSystems
 
         public void UpdateSystem()
         {
-            // processing logic here
+            foreach (KeyValuePair<uint, SizeComponent> shape in CollisionSystem.CollisionSystem.newSizeCollision)
+            {
+                if (circlesSize.ContainsKey(shape.Key))
+                {
+                    SystemDataUtility.UpdateShapeSize(shape.Key, shape.Value.size);
+                }
+            }
         }
     }
 }
