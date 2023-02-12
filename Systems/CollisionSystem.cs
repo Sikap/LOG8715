@@ -15,8 +15,6 @@ namespace collisionSystems
         public static Dictionary<uint, PositionComponent> newPositionCollision = new Dictionary<uint, PositionComponent>();
         public static Dictionary<uint, SpeedComponent> newSpeedCollision = new Dictionary<uint, SpeedComponent>();
         public static Dictionary<uint, SizeComponent> newSizeCollision = new Dictionary<uint, SizeComponent>();
-        public static List<CreationComponent> toCreate = new List<CreationComponent>();
-        public static Dictionary<uint, DestroyComponent> toDestroy = new Dictionary<uint, DestroyComponent>();
 
         public string Name { get; private set; }
         public CollisionSystem(string name)
@@ -65,49 +63,32 @@ namespace collisionSystems
             foreach (KeyValuePair<uint, PositionComponent> shape in newPositionCollision)
             {
                 if(newSizeCollision.ContainsKey(shape.Key) && newSizeCollision[shape.Key].size <= 0) {
-                    toDestroy[shape.Key] = new DestroyComponent{ toDestroy = true };
+                    CirclesSystem.SpawnCirclesSystem.toDestroy[shape.Key] = new DestroyComponent{ toDestroy = true };
                 } else if (newSizeCollision.ContainsKey(shape.Key) && newSizeCollision[shape.Key].size >= 10) {
-                    toDestroy[shape.Key] = new DestroyComponent{ toDestroy = true };
-                    
-                    var idOne = SystemDataUtility.id++;
-                    var idTwo = SystemDataUtility.id++;
-                    
+                    CirclesSystem.SpawnCirclesSystem.toDestroy[shape.Key] = new DestroyComponent{ toDestroy = true };                    
                     var zeroRadVector = new Vector2(1,0);
-                    // Angle of the speed of the two circle +45deg and -45deg from the original new speed as if they broke apart.
-                    var angledSpeed = RotateVec(newSpeedCollision[shape.Key].speed, Mathf.Deg2Rad * 45);
-                    // To separate circle along the original direction of motion so they dont collide again together
-                    var angleRadPerpendicularToMotion = Vector2.Angle(zeroRadVector, Vector2.Perpendicular(MovementSystem.MovementSystem.circlesSpeed[shape.Key].speed)) * Mathf.Deg2Rad;
+                    var motionAngle = Vector2.Angle(zeroRadVector, newSpeedCollision[shape.Key].speed) * Mathf.Deg2Rad;
 
-                    // Find new center of circle x
-                    var smallerCircleOnePositionX = newPositionCollision[shape.Key].position.x + ((newSizeCollision[shape.Key].size/2) * Mathf.Cos(angleRadPerpendicularToMotion));
-                    // Find new center of circle y
-                    var smallerCircleOnePositionY = newPositionCollision[shape.Key].position.y + ((newSizeCollision[shape.Key].size/2) * Mathf.Sin(angleRadPerpendicularToMotion));
+                    var smallerCircleOnePositionX = newPositionCollision[shape.Key].position.x + ((newSizeCollision[shape.Key].size/4) * Mathf.Cos(motionAngle));
+                    var smallerCircleOnePositionY = newPositionCollision[shape.Key].position.y + ((newSizeCollision[shape.Key].size/4) * Mathf.Sin(motionAngle));
+
                     var smallerCircleOnePosition = new Vector2(smallerCircleOnePositionX, smallerCircleOnePositionY);
                     var smallerCircleOneSize = newSizeCollision[shape.Key].size/2;
-                    var smallerCircleOneSpeed = angledSpeed;
+                    var smallerCircleOneSpeed = newSpeedCollision[shape.Key].speed;
                     
-                    // Find new center of circle x
-                    var smallerCircleTwoPositionX = newPositionCollision[shape.Key].position.x + ((newSizeCollision[shape.Key].size/2) * Mathf.Cos(angleRadPerpendicularToMotion +1));
-                    // Find new center of circle y
-                    var smallerCircleTwoPositionY = newPositionCollision[shape.Key].position.y + ((newSizeCollision[shape.Key].size/2) * Mathf.Sin(angleRadPerpendicularToMotion +1));                 
+                    var smallerCircleTwoPositionX = newPositionCollision[shape.Key].position.x + ((newSizeCollision[shape.Key].size/4) * Mathf.Cos(motionAngle + Mathf.PI));
+                    var smallerCircleTwoPositionY = newPositionCollision[shape.Key].position.y + ((newSizeCollision[shape.Key].size/4) * Mathf.Sin(motionAngle + Mathf.PI));                 
+
                     var smallerCircleTwoPosition = new Vector2(smallerCircleTwoPositionX, smallerCircleTwoPositionY);
                     var smallerCircleTwoSize = newSizeCollision[shape.Key].size/2;
-                    var smallerCircleTwoSpeed = Vector2.Perpendicular(angledSpeed);
+                    var smallerCircleTwoSpeed = newSpeedCollision[shape.Key].speed * -1;
 
-                    toCreate.Add(new CreationComponent{ size = smallerCircleOneSize, position = smallerCircleOnePosition, speed = smallerCircleOneSpeed });
-                    toCreate.Add(new CreationComponent{ size = smallerCircleTwoSize, position = smallerCircleTwoPosition, speed = smallerCircleTwoSpeed });
-
-                    // ecsManager.DestroyShape(shape.Key);
-                    // SystemDataUtility.RemoveShapeDataFromSystems(shape.Key);
-                    // var idOne = SystemDataUtility.AddShapeDataToSystems(smallerCircleOneSize, smallerCircleOnePosition, smallerCircleOneSpeed);
-                    // var idTwo = SystemDataUtility.AddShapeDataToSystems(smallerCircleTwoSize, smallerCircleTwoPosition, smallerCircleTwoSpeed);
-                    // SystemDataUtility.CreateCircle(idOne, smallerCircleOnePosition, smallerCircleOneSize);
-                    // SystemDataUtility.CreateCircle(idTwo, smallerCircleTwoPosition, smallerCircleTwoSize);
+                    CirclesSystem.SpawnCirclesSystem.toCreate.Add(new CreationComponent{ size = smallerCircleOneSize, position = smallerCircleOnePosition, speed = smallerCircleOneSpeed });
+                    CirclesSystem.SpawnCirclesSystem.toCreate.Add(new CreationComponent{ size = smallerCircleTwoSize, position = smallerCircleTwoPosition, speed = smallerCircleTwoSpeed });
                 } else {
                     MovementSystem.MovementSystem.circlesPosition[shape.Key] = shape.Value;
                     MovementSystem.MovementSystem.circlesSpeed[shape.Key] = newSpeedCollision[shape.Key];
                     ResizeSystem.ResizeSystem.circlesSize[shape.Key] = newSizeCollision[shape.Key];
-                    // SystemDataUtility.UpdateShapePosition(shape.Key, shape.Value.position);
                 }
             }
         }
@@ -123,8 +104,6 @@ namespace collisionSystems
             newPositionCollision.Clear();
             newSpeedCollision.Clear();
             newSizeCollision.Clear();
-            toCreate.Clear();
-            toDestroy.Clear();
         }
     }
 }

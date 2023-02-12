@@ -3,6 +3,7 @@ using circlesSystem;
 using movementSystems;
 using collisionSystems;
 using resizeSystems;
+using colorSystems;
 
 public class RegisterSystems
 {
@@ -16,6 +17,7 @@ public class RegisterSystems
         toRegister.Add(new MovementSystem("MovementSystem"));
         toRegister.Add(new CollisionSystem("CollisionSystem"));
         toRegister.Add(new ResizeSystem("ResizeSystem"));
+        toRegister.Add(new ColorSystem("ColorSystem"));
 
         return toRegister;
     }

@@ -9,6 +9,9 @@ namespace circlesSystem
 {
     public class SpawnCirclesSystem : ISystem
     {
+        public static List<CreationComponent> toCreate = new List<CreationComponent>();
+        public static Dictionary<uint, DestroyComponent> toDestroy = new Dictionary<uint, DestroyComponent>();
+
         public string Name { get; private set; }
        
         public SpawnCirclesSystem(string name)
@@ -16,7 +19,7 @@ namespace circlesSystem
             Name = name;
             UnityEngine.Random.InitState(1);
             SpawnCircleCollisionPath();
-            // SpawnCircle(10);
+            // SpawnCircle(100);
         }
 
         public void SpawnCircle(int numOfCircle)
@@ -34,13 +37,13 @@ namespace circlesSystem
         private void SpawnCircleCollisionPath()
         {
             var shapeOneSize = 1;
-            var shapeOnePosition = new Vector2(10, 0);
+            var shapeOnePosition = new Vector2(5, 0);
             var shapeOneSpeed = new Vector2(-0.1f,0);
             var idOne = SystemDataUtility.AddShapeDataToSystems(shapeOneSize, shapeOnePosition, shapeOneSpeed);
             SystemDataUtility.CreateCircle(idOne, shapeOnePosition, shapeOneSize);
             
             var shapeTwoSize = 9;
-            var shapeTwoPosition = new Vector2(-10, 0);
+            var shapeTwoPosition = new Vector2(-5, 0);
             var shapeTwoSpeed = new Vector2(0.1f,0);
             var idTwo = SystemDataUtility.AddShapeDataToSystems(shapeTwoSize, shapeTwoPosition, shapeTwoSpeed);
             SystemDataUtility.CreateCircle(idTwo, shapeTwoPosition, shapeTwoSize);
@@ -48,16 +51,22 @@ namespace circlesSystem
 
         public void UpdateSystem()
         {
-            foreach (KeyValuePair<uint,DestroyComponent> shape in CollisionSystem.CollisionSystem.toDestroy)
+            foreach (KeyValuePair<uint,DestroyComponent> shape in toDestroy)
             {
                 SystemDataUtility.RemoveShapeDataFromSystems(shape.Key);
                 SystemDataUtility.DestroyShape(shape.Key);
             }
-            foreach (var shape in CollisionSystem.CollisionSystem.toCreate)
+            foreach (var shape in toCreate)
             {
                 var id = SystemDataUtility.AddShapeDataToSystems(shape.size, shape.position, shape.speed);
                 SystemDataUtility.CreateCircle(id, shape.position, shape.size);
             }
+            ClearDictionnaries();
+        }
+
+        public void ClearDictionnaries() {
+            toCreate.Clear();
+            toDestroy.Clear();
         }
     }
 }
