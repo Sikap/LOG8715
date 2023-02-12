@@ -72,6 +72,9 @@ namespace collisionSystems
                             newSpeedCollision[shapeTwo.Key] = new SpeedComponent { speed = newSpeed2 };
                             newSizeCollision[shapeTwo.Key] = new SizeComponent { size = shapeTwoSize };
                             circlesCollision[shapeTwo.Key] = new CollisionComponent { isCollision = true };
+                        }else {
+                            circlesCollision[shapeOne.Key] = new CollisionComponent { isCollision = false };
+                            circlesCollision[shapeTwo.Key] = new CollisionComponent { isCollision = false };
                         }
                     }
                 }

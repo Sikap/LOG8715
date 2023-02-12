@@ -1,6 +1,7 @@
 using UnityEngine;
 using MovementSystem = movementSystems;
 using ResizeSystem = resizeSystems;
+using CollisionSystem = collisionSystems;
 
 public class SystemDataUtility
 {
