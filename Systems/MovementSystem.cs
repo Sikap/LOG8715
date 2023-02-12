@@ -22,7 +22,7 @@ namespace movementSystems
         {
             global::ECSManager ecsManager = global::ECSManager.Instance;
             var toModify = new Dictionary<uint, PositionComponent>();
-            foreach (KeyValuePair<uint,PositionComponent> entry in circlesPosition)
+            foreach (KeyValuePair<uint,DynamicComponent> entry in circlesIsDynamic)
             {
                 if (!CollisionSystems.CollisionSystem.circlesCollision.ContainsKey(entry.Key) || true)
                 {

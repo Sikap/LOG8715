@@ -4,6 +4,6 @@ using UnityEngine;
 
 public struct DynamicComponent
 {
-    bool isDynamic;
+    public bool isDynamic;
 }
 

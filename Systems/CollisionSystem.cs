@@ -30,32 +30,48 @@ namespace collisionSystems
                 var shapeOnePosition = shapeOne.Value.position;
                 var shapeOneSpeed = MovementSystem.MovementSystem.circlesSpeed[shapeOne.Key].speed;
                 var shapeOneSize = ResizeSystem.ResizeSystem.circlesSize[shapeOne.Key].size;
+                var shapeOneIsDynamic = MovementSystem.MovementSystem.circlesIsDynamic[shapeOne.Key].isDynamic;
+
                 foreach (KeyValuePair<uint, PositionComponent> shapeTwo in MovementSystem.MovementSystem.circlesPosition)
                 {
                     if (shapeOne.Key != shapeTwo.Key) {
                         var shapeTwoPosition = shapeTwo.Value.position;
                         var shapeTwoSpeed = MovementSystem.MovementSystem.circlesSpeed[shapeTwo.Key].speed;
                         var shapeTwoSize = ResizeSystem.ResizeSystem.circlesSize[shapeTwo.Key].size;
+                        var shapeTwoIsDynamic = MovementSystem.MovementSystem.circlesIsDynamic[shapeTwo.Key].isDynamic;
                         var collisionResult = CollisionUtility.CalculateCollision(shapeOnePosition, shapeOneSpeed, shapeOneSize, shapeTwoPosition, shapeTwoSpeed, shapeTwoSize);
                         if (collisionResult != null)
-                        {
-                            if (shapeOneSize > shapeTwoSize)
-                            {
-                                shapeOneSize++;
-                                shapeTwoSize--;
-                            } else if (shapeOneSize < shapeTwoSize)
-                            {
-                                shapeOneSize--;
-                                shapeTwoSize++;
+                        {   
+                            var newPosition1 = collisionResult.position1;
+                            var newSpeed1 = collisionResult.velocity1 ;
+                            var newPosition2 = collisionResult.position2;
+                            var newSpeed2 = collisionResult.velocity2 ;
+                            if(shapeOneIsDynamic && shapeTwoIsDynamic){
+                                if (shapeOneSize > shapeTwoSize)
+                                {
+                                    shapeOneSize++;
+                                    shapeTwoSize--;
+                                } else if (shapeOneSize < shapeTwoSize)
+                                {
+                                    shapeOneSize--;
+                                    shapeTwoSize++;
+                                }
+                            } else if (shapeOneIsDynamic){
+                                newPosition2 = shapeTwoPosition;
+                                newSpeed2 = shapeTwoSpeed;
+                            } else if(shapeTwoIsDynamic){
+                                newPosition1 = shapeOnePosition;
+                                newSpeed1 = shapeOneSpeed;
                             }
-                            newPositionCollision[shapeOne.Key] = new PositionComponent { position = collisionResult.position1 };
-                            newSpeedCollision[shapeOne.Key] = new SpeedComponent { speed = collisionResult.velocity1 };
+                            
+                            newPositionCollision[shapeOne.Key] = new PositionComponent { position = newPosition1 };
+                            newSpeedCollision[shapeOne.Key] = new SpeedComponent { speed = newSpeed1 };
                             newSizeCollision[shapeOne.Key] = new SizeComponent { size = shapeOneSize };
                             circlesCollision[shapeOne.Key] = new CollisionComponent { isCollision = true };
-                            newPositionCollision[shapeTwo.Key] = new PositionComponent { position = collisionResult.position2 };
-                            newSpeedCollision[shapeTwo.Key] = new SpeedComponent { speed = collisionResult.velocity2 };
+                            newPositionCollision[shapeTwo.Key] = new PositionComponent { position = newPosition2 };
+                            newSpeedCollision[shapeTwo.Key] = new SpeedComponent { speed = newSpeed2 };
                             newSizeCollision[shapeTwo.Key] = new SizeComponent { size = shapeTwoSize };
-                            circlesCollision[shapeOne.Key] = new CollisionComponent { isCollision = true };
+                            circlesCollision[shapeTwo.Key] = new CollisionComponent { isCollision = true };
                         }
                     }
                 }

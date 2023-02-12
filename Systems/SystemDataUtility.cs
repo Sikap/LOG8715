@@ -37,7 +37,7 @@ public class SystemDataUtility
         ecsManager.UpdateShapePosition(id, position);
     }
 
-    public static uint AddShapeDataToSystems(int shapeSize, Vector2 shapePosition, Vector2 shapeSpeed) {
+    public static uint AddShapeDataToSystems(int shapeSize, Vector2 shapePosition, Vector2 shapeSpeed, bool shapeDynamic) {
         id++;
         if (!ResizeSystem.ResizeSystem.circlesSize.ContainsKey(id))
         {
@@ -50,6 +50,10 @@ public class SystemDataUtility
         if (!MovementSystem.MovementSystem.circlesSpeed.ContainsKey(id))
         {
             MovementSystem.MovementSystem.circlesSpeed.Add(id, new SpeedComponent { speed = shapeSpeed });
+        }
+         if (!MovementSystem.MovementSystem.circlesIsDynamic.ContainsKey(id))
+        {
+            MovementSystem.MovementSystem.circlesIsDynamic.Add(id, new DynamicComponent { isDynamic = shapeDynamic });
         }
         return id;
     }
@@ -66,6 +70,10 @@ public class SystemDataUtility
         if (MovementSystem.MovementSystem.circlesSpeed.ContainsKey(id))
         {
             MovementSystem.MovementSystem.circlesSpeed.Remove(id);
+        }
+        if (MovementSystem.MovementSystem.circlesIsDynamic.ContainsKey(id))
+        {
+            MovementSystem.MovementSystem.circlesIsDynamic.Remove(id);
         }
     }
 

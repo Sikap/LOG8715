@@ -18,20 +18,28 @@ namespace circlesSystem
         {
             Name = name;
             UnityEngine.Random.InitState(1);
-            SpawnCircleCollisionPath();
-            // SpawnCircle(100);
+            //SpawnCircleCollisionPath();
+            SpawnCircle(10);
         }
 
         public void SpawnCircle(int numOfCircle)
         {  
-            for (int i = 0; i < numOfCircle;i++)
+            for (int i = 0; i < numOfCircle; i++)
             {
-                var shapeSize = UnityEngine.Random.Range(0, 10);
+                var shapeSize = UnityEngine.Random.Range(1, 9);
                 var shapePosition = new Vector2(UnityEngine.Random.Range(-30f, 30f), UnityEngine.Random.Range(-30f, 30f));
                 var shapeSpeed = new Vector2(UnityEngine.Random.Range(-0.1f, 0.1f), UnityEngine.Random.Range(-0.1f, 0.1f));
-                var id = SystemDataUtility.AddShapeDataToSystems(shapeSize, shapePosition, shapeSpeed);
+                var isDynamic = DynamicRandomProbability(0.75f);
+                if(!isDynamic){
+                     shapeSpeed = new Vector2(0.0f, 0.0f);
+                }
+                var id = SystemDataUtility.AddShapeDataToSystems(shapeSize, shapePosition, shapeSpeed, isDynamic);
                 SystemDataUtility.CreateCircle(id, shapePosition, shapeSize);
             }
+        }
+
+        public bool DynamicRandomProbability (float probability) {
+            return UnityEngine.Random.value < probability;
         }
 
         private void SpawnCircleCollisionPath()
@@ -39,13 +47,13 @@ namespace circlesSystem
             var shapeOneSize = 1;
             var shapeOnePosition = new Vector2(5, 0);
             var shapeOneSpeed = new Vector2(-0.1f,0);
-            var idOne = SystemDataUtility.AddShapeDataToSystems(shapeOneSize, shapeOnePosition, shapeOneSpeed);
+            var idOne = SystemDataUtility.AddShapeDataToSystems(shapeOneSize, shapeOnePosition, shapeOneSpeed, true);
             SystemDataUtility.CreateCircle(idOne, shapeOnePosition, shapeOneSize);
             
             var shapeTwoSize = 9;
             var shapeTwoPosition = new Vector2(-5, 0);
             var shapeTwoSpeed = new Vector2(0.1f,0);
-            var idTwo = SystemDataUtility.AddShapeDataToSystems(shapeTwoSize, shapeTwoPosition, shapeTwoSpeed);
+            var idTwo = SystemDataUtility.AddShapeDataToSystems(shapeTwoSize, shapeTwoPosition, shapeTwoSpeed, true);
             SystemDataUtility.CreateCircle(idTwo, shapeTwoPosition, shapeTwoSize);
         }
 
@@ -58,7 +66,7 @@ namespace circlesSystem
             }
             foreach (var shape in toCreate)
             {
-                var id = SystemDataUtility.AddShapeDataToSystems(shape.size, shape.position, shape.speed);
+                var id = SystemDataUtility.AddShapeDataToSystems(shape.size, shape.position, shape.speed, true);
                 SystemDataUtility.CreateCircle(id, shape.position, shape.size);
             }
             ClearDictionnaries();
