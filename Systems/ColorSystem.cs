@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System;
 using UnityEngine;
-using MovementSystem = movementSystems;
 using CollisionSystem = collisionSystems;
 using ResizeSystem = resizeSystems;
 
@@ -23,18 +22,18 @@ namespace colorSystems
         public void UpdateSystem()        
         {            
             global::ECSManager ecsManager = global::ECSManager.Instance;
-            foreach (KeyValuePair<uint, PositionComponent> shape in MovementSystem.MovementSystem.circlesPosition)
+            foreach (KeyValuePair<uint, PositionComponent> shape in worldData.WorldData.circlesPosition)
             {
-                if(!MovementSystem.MovementSystem.circlesIsDynamic[shape.Key].isDynamic){
+                if(!worldData.WorldData.circlesIsDynamic[shape.Key].isDynamic){
                     ecsManager.UpdateShapeColor(shape.Key, Color.red);
                 } else {
                     Vector2 clickScreenPosition = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
                     Vector2 clickWorldPosition = Camera.main.ScreenToWorldPoint(clickScreenPosition);
-                    var size = ResizeSystem.ResizeSystem.circlesSize[shape.Key].size;
+                    var size = worldData.WorldData.circlesSize[shape.Key].size;
                     if (Input.GetMouseButtonDown(0) && clickInCircle(clickWorldPosition,shape.Value.position,size)){
                         ecsManager.UpdateShapeColor(shape.Key, new Color(255f/255f, 192f/255f, 203f/255f));
                     }
-                    if (CollisionSystem.CollisionSystem.circlesCollision[shape.Key].isCollision){
+                    if (worldData.WorldData.circlesCollision[shape.Key].isCollision){
                         ecsManager.UpdateShapeColor(shape.Key, Color.green);
                     } else {
                         if (size == 9){

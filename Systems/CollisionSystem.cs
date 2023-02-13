@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using MovementSystem = movementSystems;
 using ResizeSystem = resizeSystems;
 using CirclesSystem = circlesSystem;
 
@@ -11,10 +10,6 @@ namespace collisionSystems
 
     public class CollisionSystem : ISystem
     {
-        public static Dictionary<uint, CollisionComponent> circlesCollision = new Dictionary<uint, CollisionComponent>();
-        public static Dictionary<uint, PositionComponent> newPositionCollision = new Dictionary<uint, PositionComponent>();
-        public static Dictionary<uint, SpeedComponent> newSpeedCollision = new Dictionary<uint, SpeedComponent>();
-        public static Dictionary<uint, SizeComponent> newSizeCollision = new Dictionary<uint, SizeComponent>();
 
         public string Name { get; private set; }
         public CollisionSystem(string name)
@@ -25,20 +20,20 @@ namespace collisionSystems
         public void UpdateSystem()
         {
             ClearDictionnaries();
-            foreach (KeyValuePair<uint, PositionComponent> shapeOne in MovementSystem.MovementSystem.circlesPosition)
+            foreach (KeyValuePair<uint, PositionComponent> shapeOne in worldData.WorldData.circlesPosition)
             {
                 var shapeOnePosition = shapeOne.Value.position;
-                var shapeOneSpeed = MovementSystem.MovementSystem.circlesSpeed[shapeOne.Key].speed;
-                var shapeOneSize = ResizeSystem.ResizeSystem.circlesSize[shapeOne.Key].size;
-                var shapeOneIsDynamic = MovementSystem.MovementSystem.circlesIsDynamic[shapeOne.Key].isDynamic;
+                var shapeOneSpeed = worldData.WorldData.circlesSpeed[shapeOne.Key].speed;
+                var shapeOneSize = worldData.WorldData.circlesSize[shapeOne.Key].size;
+                var shapeOneIsDynamic = worldData.WorldData.circlesIsDynamic[shapeOne.Key].isDynamic;
 
-                foreach (KeyValuePair<uint, PositionComponent> shapeTwo in MovementSystem.MovementSystem.circlesPosition)
+                foreach (KeyValuePair<uint, PositionComponent> shapeTwo in worldData.WorldData.circlesPosition)
                 {
                     if (shapeOne.Key != shapeTwo.Key) {
                         var shapeTwoPosition = shapeTwo.Value.position;
-                        var shapeTwoSpeed = MovementSystem.MovementSystem.circlesSpeed[shapeTwo.Key].speed;
-                        var shapeTwoSize = ResizeSystem.ResizeSystem.circlesSize[shapeTwo.Key].size;
-                        var shapeTwoIsDynamic = MovementSystem.MovementSystem.circlesIsDynamic[shapeTwo.Key].isDynamic;
+                        var shapeTwoSpeed = worldData.WorldData.circlesSpeed[shapeTwo.Key].speed;
+                        var shapeTwoSize = worldData.WorldData.circlesSize[shapeTwo.Key].size;
+                        var shapeTwoIsDynamic = worldData.WorldData.circlesIsDynamic[shapeTwo.Key].isDynamic;
                         var collisionResult = CollisionUtility.CalculateCollision(shapeOnePosition, shapeOneSpeed, shapeOneSize, shapeTwoPosition, shapeTwoSpeed, shapeTwoSize);
                         if (collisionResult != null)
                         {   
@@ -64,50 +59,50 @@ namespace collisionSystems
                                 newSpeed1 = shapeOneSpeed;
                             }
                             
-                            newPositionCollision[shapeOne.Key] = new PositionComponent { position = newPosition1 };
-                            newSpeedCollision[shapeOne.Key] = new SpeedComponent { speed = newSpeed1 };
-                            newSizeCollision[shapeOne.Key] = new SizeComponent { size = shapeOneSize };
-                            circlesCollision[shapeOne.Key] = new CollisionComponent { isCollision = true };
-                            newPositionCollision[shapeTwo.Key] = new PositionComponent { position = newPosition2 };
-                            newSpeedCollision[shapeTwo.Key] = new SpeedComponent { speed = newSpeed2 };
-                            newSizeCollision[shapeTwo.Key] = new SizeComponent { size = shapeTwoSize };
-                            circlesCollision[shapeTwo.Key] = new CollisionComponent { isCollision = true };
+                            worldData.WorldData.newPositionCollision[shapeOne.Key] = new PositionComponent { position = newPosition1 };
+                            worldData.WorldData.newSpeedCollision[shapeOne.Key] = new SpeedComponent { speed = newSpeed1 };
+                            worldData.WorldData.newSizeCollision[shapeOne.Key] = new SizeComponent { size = shapeOneSize };
+                            worldData.WorldData.circlesCollision[shapeOne.Key] = new CollisionComponent { isCollision = true };
+                            worldData.WorldData.newPositionCollision[shapeTwo.Key] = new PositionComponent { position = newPosition2 };
+                            worldData.WorldData.newSpeedCollision[shapeTwo.Key] = new SpeedComponent { speed = newSpeed2 };
+                            worldData.WorldData.newSizeCollision[shapeTwo.Key] = new SizeComponent { size = shapeTwoSize };
+                            worldData.WorldData.circlesCollision[shapeTwo.Key] = new CollisionComponent { isCollision = true };
                         }else {
-                            circlesCollision[shapeOne.Key] = new CollisionComponent { isCollision = false };
-                            circlesCollision[shapeTwo.Key] = new CollisionComponent { isCollision = false };
+                            worldData.WorldData.circlesCollision[shapeOne.Key] = new CollisionComponent { isCollision = false };
+                            worldData.WorldData.circlesCollision[shapeTwo.Key] = new CollisionComponent { isCollision = false };
                         }
                     }
                 }
             }
-            foreach (KeyValuePair<uint, PositionComponent> shape in newPositionCollision)
+            foreach (KeyValuePair<uint, PositionComponent> shape in worldData.WorldData.newPositionCollision)
             {
-                if(newSizeCollision.ContainsKey(shape.Key) && newSizeCollision[shape.Key].size <= 0) {
-                    CirclesSystem.SpawnCirclesSystem.toDestroy[shape.Key] = new DestroyComponent{ toDestroy = true };
-                } else if (newSizeCollision.ContainsKey(shape.Key) && newSizeCollision[shape.Key].size >= 10) {
-                    CirclesSystem.SpawnCirclesSystem.toDestroy[shape.Key] = new DestroyComponent{ toDestroy = true };                    
+                if(worldData.WorldData.newSizeCollision.ContainsKey(shape.Key) && worldData.WorldData.newSizeCollision[shape.Key].size <= 0) {
+                    worldData.WorldData.toDestroy[shape.Key] = new DestroyComponent{ toDestroy = true };
+                } else if (worldData.WorldData.newSizeCollision.ContainsKey(shape.Key) && worldData.WorldData.newSizeCollision[shape.Key].size >= 10) {
+                    worldData.WorldData.toDestroy[shape.Key] = new DestroyComponent{ toDestroy = true };                    
                     var zeroRadVector = new Vector2(1,0);
-                    var motionAngle = Vector2.Angle(zeroRadVector, newSpeedCollision[shape.Key].speed) * Mathf.Deg2Rad;
+                    var motionAngle = Vector2.Angle(zeroRadVector, worldData.WorldData.newSpeedCollision[shape.Key].speed) * Mathf.Deg2Rad;
 
-                    var smallerCircleOnePositionX = newPositionCollision[shape.Key].position.x + ((newSizeCollision[shape.Key].size/4) * Mathf.Cos(motionAngle));
-                    var smallerCircleOnePositionY = newPositionCollision[shape.Key].position.y + ((newSizeCollision[shape.Key].size/4) * Mathf.Sin(motionAngle));
+                    var smallerCircleOnePositionX = worldData.WorldData.newPositionCollision[shape.Key].position.x + ((worldData.WorldData.newSizeCollision[shape.Key].size/4) * Mathf.Cos(motionAngle));
+                    var smallerCircleOnePositionY = worldData.WorldData.newPositionCollision[shape.Key].position.y + ((worldData.WorldData.newSizeCollision[shape.Key].size/4) * Mathf.Sin(motionAngle));
 
                     var smallerCircleOnePosition = new Vector2(smallerCircleOnePositionX, smallerCircleOnePositionY);
-                    var smallerCircleOneSize = newSizeCollision[shape.Key].size/2;
-                    var smallerCircleOneSpeed = newSpeedCollision[shape.Key].speed;
+                    var smallerCircleOneSize = worldData.WorldData.newSizeCollision[shape.Key].size/2;
+                    var smallerCircleOneSpeed = worldData.WorldData.newSpeedCollision[shape.Key].speed;
                     
-                    var smallerCircleTwoPositionX = newPositionCollision[shape.Key].position.x + ((newSizeCollision[shape.Key].size/4) * Mathf.Cos(motionAngle + Mathf.PI));
-                    var smallerCircleTwoPositionY = newPositionCollision[shape.Key].position.y + ((newSizeCollision[shape.Key].size/4) * Mathf.Sin(motionAngle + Mathf.PI));                 
+                    var smallerCircleTwoPositionX = worldData.WorldData.newPositionCollision[shape.Key].position.x + ((worldData.WorldData.newSizeCollision[shape.Key].size/4) * Mathf.Cos(motionAngle + Mathf.PI));
+                    var smallerCircleTwoPositionY = worldData.WorldData.newPositionCollision[shape.Key].position.y + ((worldData.WorldData.newSizeCollision[shape.Key].size/4) * Mathf.Sin(motionAngle + Mathf.PI));                 
 
                     var smallerCircleTwoPosition = new Vector2(smallerCircleTwoPositionX, smallerCircleTwoPositionY);
-                    var smallerCircleTwoSize = newSizeCollision[shape.Key].size/2;
-                    var smallerCircleTwoSpeed = newSpeedCollision[shape.Key].speed * -1;
+                    var smallerCircleTwoSize = worldData.WorldData.newSizeCollision[shape.Key].size/2;
+                    var smallerCircleTwoSpeed = worldData.WorldData.newSpeedCollision[shape.Key].speed * -1;
 
-                    CirclesSystem.SpawnCirclesSystem.toCreate.Add(new CreationComponent{ size = smallerCircleOneSize, position = smallerCircleOnePosition, speed = smallerCircleOneSpeed });
-                    CirclesSystem.SpawnCirclesSystem.toCreate.Add(new CreationComponent{ size = smallerCircleTwoSize, position = smallerCircleTwoPosition, speed = smallerCircleTwoSpeed });
+                    worldData.WorldData.toCreate.Add(new CreationComponent{ size = smallerCircleOneSize, position = smallerCircleOnePosition, speed = smallerCircleOneSpeed });
+                    worldData.WorldData.toCreate.Add(new CreationComponent{ size = smallerCircleTwoSize, position = smallerCircleTwoPosition, speed = smallerCircleTwoSpeed });
                 } else {
-                    MovementSystem.MovementSystem.circlesPosition[shape.Key] = shape.Value;
-                    MovementSystem.MovementSystem.circlesSpeed[shape.Key] = newSpeedCollision[shape.Key];
-                    ResizeSystem.ResizeSystem.circlesSize[shape.Key] = newSizeCollision[shape.Key];
+                    worldData.WorldData.circlesPosition[shape.Key] = shape.Value;
+                    worldData.WorldData.circlesSpeed[shape.Key] = worldData.WorldData.newSpeedCollision[shape.Key];
+                    worldData.WorldData.circlesSize[shape.Key] = worldData.WorldData.newSizeCollision[shape.Key];
                 }
             }
         }
@@ -119,10 +114,10 @@ namespace collisionSystems
         }
 
         public void ClearDictionnaries() {
-            circlesCollision.Clear();
-            newPositionCollision.Clear();
-            newSpeedCollision.Clear();
-            newSizeCollision.Clear();
+            worldData.WorldData.circlesCollision.Clear();
+            worldData.WorldData.newPositionCollision.Clear();
+            worldData.WorldData.newSpeedCollision.Clear();
+            worldData.WorldData.newSizeCollision.Clear();
         }
     }
 }

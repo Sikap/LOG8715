@@ -40,41 +40,41 @@ public class SystemDataUtility
 
     public static uint AddShapeDataToSystems(int shapeSize, Vector2 shapePosition, Vector2 shapeSpeed, bool shapeDynamic) {
         id++;
-        if (!ResizeSystem.ResizeSystem.circlesSize.ContainsKey(id))
+        if (!worldData.WorldData.circlesSize.ContainsKey(id))
         {
-            ResizeSystem.ResizeSystem.circlesSize.Add(id, new SizeComponent { size = shapeSize });
+            worldData.WorldData.circlesSize.Add(id, new SizeComponent { size = shapeSize });
         }
-        if (!MovementSystem.MovementSystem.circlesPosition.ContainsKey(id))
+        if (!worldData.WorldData.circlesPosition.ContainsKey(id))
         {
-            MovementSystem.MovementSystem.circlesPosition.Add(id, new PositionComponent { position = shapePosition });
+            worldData.WorldData.circlesPosition.Add(id, new PositionComponent { position = shapePosition });
         }
-        if (!MovementSystem.MovementSystem.circlesSpeed.ContainsKey(id))
+        if (!worldData.WorldData.circlesSpeed.ContainsKey(id))
         {
-            MovementSystem.MovementSystem.circlesSpeed.Add(id, new SpeedComponent { speed = shapeSpeed });
+            worldData.WorldData.circlesSpeed.Add(id, new SpeedComponent { speed = shapeSpeed });
         }
-         if (!MovementSystem.MovementSystem.circlesIsDynamic.ContainsKey(id))
+         if (!worldData.WorldData.circlesIsDynamic.ContainsKey(id))
         {
-            MovementSystem.MovementSystem.circlesIsDynamic.Add(id, new DynamicComponent { isDynamic = shapeDynamic });
+            worldData.WorldData.circlesIsDynamic.Add(id, new DynamicComponent { isDynamic = shapeDynamic });
         }
         return id;
     }
 
     public static void RemoveShapeDataFromSystems(uint id) {
-        if (ResizeSystem.ResizeSystem.circlesSize.ContainsKey(id))
+        if (worldData.WorldData.circlesSize.ContainsKey(id))
         {
-            ResizeSystem.ResizeSystem.circlesSize.Remove(id);
+            worldData.WorldData.circlesSize.Remove(id);
         }
-        if (MovementSystem.MovementSystem.circlesPosition.ContainsKey(id))
+        if (worldData.WorldData.circlesPosition.ContainsKey(id))
         {
-            MovementSystem.MovementSystem.circlesPosition.Remove(id);
+            worldData.WorldData.circlesPosition.Remove(id);
         }
-        if (MovementSystem.MovementSystem.circlesSpeed.ContainsKey(id))
+        if (worldData.WorldData.circlesSpeed.ContainsKey(id))
         {
-            MovementSystem.MovementSystem.circlesSpeed.Remove(id);
+            worldData.WorldData.circlesSpeed.Remove(id);
         }
-        if (MovementSystem.MovementSystem.circlesIsDynamic.ContainsKey(id))
+        if (worldData.WorldData.circlesIsDynamic.ContainsKey(id))
         {
-            MovementSystem.MovementSystem.circlesIsDynamic.Remove(id);
+            worldData.WorldData.circlesIsDynamic.Remove(id);
         }
     }
 

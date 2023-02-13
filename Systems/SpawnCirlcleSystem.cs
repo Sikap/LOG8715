@@ -3,23 +3,19 @@ using System.CodeDom;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using CollisionSystem = collisionSystems;
-
+using worldData;
 namespace circlesSystem
 {
     public class SpawnCirclesSystem : ISystem
     {
-        public static List<CreationComponent> toCreate = new List<CreationComponent>();
-        public static Dictionary<uint, DestroyComponent> toDestroy = new Dictionary<uint, DestroyComponent>();
-
         public string Name { get; private set; }
-       
+
         public SpawnCirclesSystem(string name)
         {
             Name = name;
             UnityEngine.Random.InitState(1);
             //SpawnCircleCollisionPath();
-            SpawnCircle(5);
+            SpawnCircle(10);
         }
 
         public void SpawnCircle(int numOfCircle)
@@ -65,12 +61,12 @@ namespace circlesSystem
 
         public void UpdateSystem()
         {
-            foreach (KeyValuePair<uint,DestroyComponent> shape in toDestroy)
+            foreach (KeyValuePair<uint,DestroyComponent> shape in worldData.WorldData.toDestroy)
             {
                 SystemDataUtility.RemoveShapeDataFromSystems(shape.Key);
                 SystemDataUtility.DestroyShape(shape.Key);
             }
-            foreach (var shape in toCreate)
+            foreach (var shape in worldData.WorldData.toCreate)
             {
                 var id = SystemDataUtility.AddShapeDataToSystems(shape.size, shape.position, shape.speed, true);
                 SystemDataUtility.CreateCircle(id, shape.position, shape.size);
@@ -79,8 +75,8 @@ namespace circlesSystem
         }
 
         public void ClearDictionnaries() {
-            toCreate.Clear();
-            toDestroy.Clear();
+            worldData.WorldData.toCreate.Clear();
+            worldData.WorldData.toDestroy.Clear();
         }
     }
 }

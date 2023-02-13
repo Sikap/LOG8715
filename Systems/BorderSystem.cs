@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 using UnityEngine;
-using MovementSystem = movementSystems;
 using ResizeSystem = resizeSystems;
 
 namespace borderSystem
@@ -11,8 +10,6 @@ namespace borderSystem
     public class BorderSystem : ISystem
     {
         public static Camera mainCamera;
-        public static Dictionary<uint, PositionComponent> newPosition = new Dictionary<uint, PositionComponent>();
-        public static Dictionary<uint, SpeedComponent> newSpeed = new Dictionary<uint, SpeedComponent>();
 
         public string Name { get; private set; }
         public BorderSystem(string name)
@@ -87,34 +84,34 @@ namespace borderSystem
             return velocity;
         }
         public void ClearDictionnaries() {
-            newPosition.Clear();
-            newSpeed.Clear();
+            worldData.WorldData.circleBorderBouncePosition.Clear();
+            worldData.WorldData.circleBorderBounceSpeed.Clear();
         }
         public void UpdateSystem()
         {
             ClearDictionnaries();
             global::ECSManager ecsManager = global::ECSManager.Instance;
-            foreach (KeyValuePair<uint, PositionComponent> shape in MovementSystem.MovementSystem.circlesPosition)
+            foreach (KeyValuePair<uint, PositionComponent> shape in worldData.WorldData.circlesPosition)
             {
-                var size = ResizeSystem.ResizeSystem.circlesSize[shape.Key].size;
-                var speed = MovementSystem.MovementSystem.circlesSpeed[shape.Key].speed;
+                var size = worldData.WorldData.circlesSize[shape.Key].size;
+                var speed =worldData.WorldData.circlesSpeed[shape.Key].speed;
                 Vector2 shapePosition = new Vector2(shape.Value.position.x , shape.Value.position.y);
                 
                 if(IsCircleOffScreen(shapePosition, size)){ 
-                    Debug.Log("Circle hit camera bounds");
-                    newPosition[shape.Key] = new PositionComponent { position = BounceBackPosition(shape.Value.position,size) };
-                    newSpeed[shape.Key] = new SpeedComponent { speed = BounceBackSpeed(shape.Value.position,size,speed) };
+                    //Debug.Log("Circle hit camera bounds");
+                    worldData.WorldData.circleBorderBouncePosition[shape.Key] = new PositionComponent { position = BounceBackPosition(shape.Value.position,size) };
+                    worldData.WorldData.circleBorderBounceSpeed[shape.Key] = new SpeedComponent { speed = BounceBackSpeed(shape.Value.position,size,speed) };
                 }
             }
-            foreach (KeyValuePair<uint, PositionComponent> shape in newPosition)
+            foreach (KeyValuePair<uint, PositionComponent> shape in worldData.WorldData.circleBorderBouncePosition)
             {
                 //Debug.Log("Position was "+ MovementSystem.MovementSystem.circlesPosition[shape.Key].position );
                 //Debug.Log("Speed was "+ MovementSystem.MovementSystem.circlesSpeed[shape.Key].speed );
                 // Debug.Log("newPostion is "+ shape.Value.position );
-                //Debug.Log("newSpeed is "+ newSpeed[shape.Key].speed );
+                //Debug.Log("circleBorderBounceSpeed is "+ circleBorderBounceSpeed[shape.Key].speed );
 
-                MovementSystem.MovementSystem.circlesPosition[shape.Key] = shape.Value;
-                MovementSystem.MovementSystem.circlesSpeed[shape.Key] =  newSpeed[shape.Key];
+                worldData.WorldData.circlesPosition[shape.Key] = shape.Value;
+                worldData.WorldData.circlesSpeed[shape.Key] =  worldData.WorldData.circleBorderBounceSpeed[shape.Key];
             }
 
         }
