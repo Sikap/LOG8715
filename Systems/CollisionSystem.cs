@@ -2,8 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using ResizeSystem = resizeSystems;
-using CirclesSystem = circlesSystem;
+
 
 namespace collisionSystems
 {

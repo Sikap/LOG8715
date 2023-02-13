@@ -1,8 +1,6 @@
 using System.Collections.Generic;
 using System;
 using UnityEngine;
-using CollisionSystem = collisionSystems;
-using ResizeSystem = resizeSystems;
 
 namespace colorSystems
 {

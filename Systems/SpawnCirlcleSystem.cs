@@ -3,7 +3,6 @@ using System.CodeDom;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using worldData;
 namespace circlesSystem
 {
     public class SpawnCirclesSystem : ISystem
