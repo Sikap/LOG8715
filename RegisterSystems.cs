@@ -4,6 +4,7 @@ using movementSystems;
 using collisionSystems;
 using resizeSystems;
 using colorSystems;
+using borderSystem;
 
 public class RegisterSystems
 {
@@ -15,6 +16,7 @@ public class RegisterSystems
         // Add your systems here
         toRegister.Add(new SpawnCirclesSystem("SpawnCirclesSystem"));
         toRegister.Add(new MovementSystem("MovementSystem"));
+        toRegister.Add(new BorderSystem("BorderSystem"));
         toRegister.Add(new CollisionSystem("CollisionSystem"));
         toRegister.Add(new ResizeSystem("ResizeSystem"));
         toRegister.Add(new ColorSystem("ColorSystem"));

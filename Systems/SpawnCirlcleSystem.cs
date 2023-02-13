@@ -24,10 +24,16 @@ namespace circlesSystem
 
         public void SpawnCircle(int numOfCircle)
         {  
+            Camera mainCamera = Camera.main;
+            float halfCameraWidth = mainCamera.aspect * mainCamera.orthographicSize;
+            float halfCameraHeight = mainCamera.orthographicSize;
             for (int i = 0; i < numOfCircle; i++)
             {
                 var shapeSize = UnityEngine.Random.Range(1, 9);
-                var shapePosition = new Vector2(UnityEngine.Random.Range(-30f, 30f), UnityEngine.Random.Range(-30f, 30f));
+                float halfCircle = shapeSize / 2f;
+                var shapePosition = new Vector2(
+                    UnityEngine.Random.Range(mainCamera.transform.position.x - halfCameraWidth + halfCircle, mainCamera.transform.position.x + halfCameraWidth - halfCircle), 
+                    UnityEngine.Random.Range(mainCamera.transform.position.y - halfCameraHeight + halfCircle, mainCamera.transform.position.y + halfCameraHeight - halfCircle));
                 var shapeSpeed = new Vector2(UnityEngine.Random.Range(-0.1f, 0.1f), UnityEngine.Random.Range(-0.1f, 0.1f));
                 var isDynamic = DynamicRandomProbability(0.75f);
                 if(!isDynamic){
