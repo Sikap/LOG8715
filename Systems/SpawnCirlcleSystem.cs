@@ -19,7 +19,7 @@ namespace circlesSystem
             Name = name;
             UnityEngine.Random.InitState(1);
             //SpawnCircleCollisionPath();
-            SpawnCircle(10);
+            SpawnCircle(5);
         }
 
         public void SpawnCircle(int numOfCircle)

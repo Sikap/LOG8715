@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using MovementSystem = movementSystems;
 using ResizeSystem = resizeSystems;
@@ -22,35 +23,43 @@ namespace borderSystem
         
         public bool IsCircleOffScreen(Vector2 center, int diameter)
         {
-            Vector2 screenPoint = mainCamera.WorldToScreenPoint(center);
             float radius = diameter / 2f;
-            if (screenPoint.x - radius < 0 || screenPoint.x + radius > Screen.width || screenPoint.y - radius < 0 || screenPoint.y + radius > Screen.height)
-            {
+            var offsetRigthX = mainCamera.WorldToScreenPoint(new Vector2(center.x + radius, center.y)).x;
+            var offsetTopY = mainCamera.WorldToScreenPoint(new Vector2(center.x, center.y + radius)).y;
+            var offsetLeftX = mainCamera.WorldToScreenPoint(new Vector2(center.x - radius, center.y)).x;
+            var offsetBottomY = mainCamera.WorldToScreenPoint(new Vector2(center.x, center.y - radius)).y;
+            if ( offsetLeftX < 0 || offsetRigthX > Screen.width || offsetBottomY < 0 || offsetTopY > Screen.height)
+            {            
+                //Debug.Log("Screen height is " + Screen.height);
+                //Debug.Log("hitPoint is " + offsetTopY);
                 return true;
             }
             return false;
-        }
+        }  
         public static Vector2 BounceBackPosition(Vector2 center, int diameter)
         {
             Vector2 screenPoint = mainCamera.WorldToScreenPoint(center);
             float radius = diameter / 2f;
+            var offsetRigthX = mainCamera.WorldToScreenPoint(new Vector2(center.x + radius, center.y)).x;
+            var offsetTopY = mainCamera.WorldToScreenPoint(new Vector2(center.x, center.y + radius)).y;
+            var offsetLeftX = mainCamera.WorldToScreenPoint(new Vector2(center.x - radius, center.y)).x;
+            var offsetBottomY = mainCamera.WorldToScreenPoint(new Vector2(center.x, center.y - radius)).y;
+            if (offsetRigthX > Screen.width)
+            {
+                center.x = mainCamera.ScreenToWorldPoint(new Vector2(screenPoint.x - (offsetRigthX - Screen.width), screenPoint.y)).x;
+            }
+            else if (offsetLeftX < 0)
+            {
+                center.x = mainCamera.ScreenToWorldPoint(new Vector2(screenPoint.x + Math.Abs(offsetLeftX), screenPoint.y)).x;
+            }
 
-            if (screenPoint.x + radius > Screen.width)
+            if (offsetTopY > Screen.height)
             {
-                center.x = mainCamera.ScreenToWorldPoint(new Vector2(Screen.width - radius, screenPoint.y)).x;
+                center.y = mainCamera.ScreenToWorldPoint(new Vector2(screenPoint.x, screenPoint.y - (offsetTopY - Screen.height))).y;
             }
-            else if (screenPoint.x - radius < 0)
+            else if (offsetBottomY < 0)
             {
-                center.x = mainCamera.ScreenToWorldPoint(new Vector2(radius, screenPoint.y)).x;
-            }
-
-            if (screenPoint.y + radius > Screen.height)
-            {
-                center.y = mainCamera.ScreenToWorldPoint(new Vector2(screenPoint.x, Screen.height - radius)).y;
-            }
-            else if (screenPoint.y - radius < 0)
-            {
-                center.y = mainCamera.ScreenToWorldPoint(new Vector2(screenPoint.x, radius)).y;
+                center.y = mainCamera.ScreenToWorldPoint(new Vector2(screenPoint.x, screenPoint.y +  Math.Abs(offsetBottomY))).y;
             }
 
             return center;
@@ -60,13 +69,17 @@ namespace borderSystem
         {
             Vector2 screenPoint = mainCamera.WorldToScreenPoint(center);
             float radius = diameter / 2f;
+            var offsetRigthX = mainCamera.WorldToScreenPoint(new Vector2(center.x + radius, center.y)).x;
+            var offsetTopY = mainCamera.WorldToScreenPoint(new Vector2(center.x, center.y + radius)).y;
+            var offsetLeftX = mainCamera.WorldToScreenPoint(new Vector2(center.x - radius, center.y)).x;
+            var offsetBottomY = mainCamera.WorldToScreenPoint(new Vector2(center.x, center.y - radius)).y;
 
-            if (screenPoint.x + radius > Screen.width || screenPoint.x - radius < 0)
+            if (offsetRigthX > Screen.width ||offsetLeftX < 0)
             {
                 velocity.x = -velocity.x;
             }
 
-            if (screenPoint.y + radius > Screen.height || screenPoint.y - radius < 0)
+            if (offsetTopY > Screen.height || offsetBottomY < 0)
             {
                 velocity.y = -velocity.y;
             }
@@ -85,13 +98,21 @@ namespace borderSystem
             {
                 var size = ResizeSystem.ResizeSystem.circlesSize[shape.Key].size;
                 var speed = MovementSystem.MovementSystem.circlesSpeed[shape.Key].speed;
-                if(MovementSystem.MovementSystem.circlesIsDynamic[shape.Key].isDynamic && IsCircleOffScreen(shape.Value.position, size)){                         
+                Vector2 shapePosition = new Vector2(shape.Value.position.x , shape.Value.position.y);
+                
+                if(IsCircleOffScreen(shapePosition, size)){ 
+                    Debug.Log("Circle hit camera bounds");
                     newPosition[shape.Key] = new PositionComponent { position = BounceBackPosition(shape.Value.position,size) };
                     newSpeed[shape.Key] = new SpeedComponent { speed = BounceBackSpeed(shape.Value.position,size,speed) };
                 }
             }
             foreach (KeyValuePair<uint, PositionComponent> shape in newPosition)
             {
+                //Debug.Log("Position was "+ MovementSystem.MovementSystem.circlesPosition[shape.Key].position );
+                //Debug.Log("Speed was "+ MovementSystem.MovementSystem.circlesSpeed[shape.Key].speed );
+                // Debug.Log("newPostion is "+ shape.Value.position );
+                //Debug.Log("newSpeed is "+ newSpeed[shape.Key].speed );
+
                 MovementSystem.MovementSystem.circlesPosition[shape.Key] = shape.Value;
                 MovementSystem.MovementSystem.circlesSpeed[shape.Key] =  newSpeed[shape.Key];
             }
