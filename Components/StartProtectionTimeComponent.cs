@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public struct ProtectedComponent
+public struct StartProtectionTimeComponent
 {
-   public bool isProtected;
+    public float startProtectionTime;
 }

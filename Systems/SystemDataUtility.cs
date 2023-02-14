@@ -38,7 +38,7 @@ public class SystemDataUtility
         ecsManager.UpdateShapePosition(id, position);
     }
 
-    public static uint AddShapeDataToSystems(int shapeSize, Vector2 shapePosition, Vector2 shapeSpeed, bool shapeDynamic) {
+    public static uint AddShapeDataToSystems(int shapeSize, Vector2 shapePosition, Vector2 shapeSpeed, bool shapeDynamic, bool shapeProtection) {
         id++;
         if (!worldData.WorldData.circlesSize.ContainsKey(id))
         {
@@ -52,9 +52,13 @@ public class SystemDataUtility
         {
             worldData.WorldData.circlesSpeed.Add(id, new SpeedComponent { speed = shapeSpeed });
         }
-         if (!worldData.WorldData.circlesIsDynamic.ContainsKey(id))
+        if (!worldData.WorldData.circlesIsDynamic.ContainsKey(id))
         {
             worldData.WorldData.circlesIsDynamic.Add(id, new DynamicComponent { isDynamic = shapeDynamic });
+        }
+        if (!worldData.WorldData.circlesProtection.ContainsKey(id))
+        {
+            worldData.WorldData.circlesProtection.Add(id, new ProtectedComponent { isProtected = shapeProtection });
         }
         return id;
     }
@@ -75,6 +79,10 @@ public class SystemDataUtility
         if (worldData.WorldData.circlesIsDynamic.ContainsKey(id))
         {
             worldData.WorldData.circlesIsDynamic.Remove(id);
+        }
+        if (worldData.WorldData.circlesProtection.ContainsKey(id))
+        {
+            worldData.WorldData.circlesProtection.Remove(id);
         }
     }
 

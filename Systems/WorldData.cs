@@ -1,9 +1,7 @@
 using System;
-using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-
-
+using UnityEngine;
 
 namespace worldData{
 
@@ -13,6 +11,7 @@ namespace worldData{
         public static Dictionary<uint, DestroyComponent> toDestroy = new Dictionary<uint, DestroyComponent>();
         // Protection
         public static Dictionary<uint, ProtectedComponent> circlesProtection = new Dictionary<uint, ProtectedComponent>();
+        public static Dictionary<uint, StartProtectionTimeComponent> circleProtectionStartTime = new Dictionary<uint, StartProtectionTimeComponent>();
         // Movement 
         public static Dictionary<uint, PositionComponent> circlesPosition = new Dictionary<uint,PositionComponent>();
         public static Dictionary<uint, SpeedComponent> circlesSpeed = new Dictionary<uint,SpeedComponent>();

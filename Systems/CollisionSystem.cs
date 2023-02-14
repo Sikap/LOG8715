@@ -43,16 +43,37 @@ namespace collisionSystems
                             if(shapeOneIsDynamic && shapeTwoIsDynamic){
                                 if (shapeOneSize > shapeTwoSize)
                                 {
-                                    shapeOneSize++;
-                                    shapeTwoSize--;
+                                    if(!worldData.WorldData.circlesProtection[shapeOne.Key].isProtected){
+                                        if(!worldData.WorldData.circlesProtection[shapeTwo.Key].isProtected){
+                                            shapeOneSize++;
+                                        }else{
+                                            shapeOneSize--;
+                                        }
+                                    }
+                                    if(!worldData.WorldData.circlesProtection[shapeTwo.Key].isProtected){
+                                        if(!worldData.WorldData.circlesProtection[shapeOne.Key].isProtected){
+                                            shapeTwoSize--;
+                                        }
+                                    }
                                 } else if (shapeOneSize < shapeTwoSize)
                                 {
-                                    shapeOneSize--;
-                                    shapeTwoSize++;
+                                    if(!worldData.WorldData.circlesProtection[shapeOne.Key].isProtected){
+                                        if(!worldData.WorldData.circlesProtection[shapeTwo.Key].isProtected){
+                                            shapeOneSize--;
+                                        }
+                                    }
+                                    if(!worldData.WorldData.circlesProtection[shapeTwo.Key].isProtected){
+                                        if(!worldData.WorldData.circlesProtection[shapeOne.Key].isProtected){
+                                            shapeTwoSize++;
+                                        }else{
+                                            shapeTwoSize--;
+                                        }
+                                    }
                                 }
                             } else if (shapeOneIsDynamic){
                                 newPosition2 = shapeTwoPosition;
                                 newSpeed2 = shapeTwoSpeed;
+
                             } else if(shapeTwoIsDynamic){
                                 newPosition1 = shapeOnePosition;
                                 newSpeed1 = shapeOneSpeed;

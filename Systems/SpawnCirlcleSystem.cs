@@ -7,8 +7,8 @@ namespace circlesSystem
 {
     public class SpawnCirclesSystem : ISystem
     {
+        global::ECSManager ecsManager = global::ECSManager.Instance;                        
         public string Name { get; private set; }
-
         public SpawnCirclesSystem(string name)
         {
             Name = name;
@@ -22,28 +22,25 @@ namespace circlesSystem
             Camera mainCamera = Camera.main;
             float halfCameraWidth = mainCamera.aspect * mainCamera.orthographicSize;
             float halfCameraHeight = mainCamera.orthographicSize;
-            for (int i = 0; i < numOfCircle; i++)
+            var circlesToSpawn = ecsManager.Config.circleInstancesToSpawn;
+
+            foreach(Config.ShapeConfig shape in circlesToSpawn)
             {
-                var shapeSize = UnityEngine.Random.Range(1, 9);
-                float halfCircle = shapeSize / 2f;
-                var shapePosition = new Vector2(
-                    UnityEngine.Random.Range(mainCamera.transform.position.x - halfCameraWidth + halfCircle, mainCamera.transform.position.x + halfCameraWidth - halfCircle), 
-                    UnityEngine.Random.Range(mainCamera.transform.position.y - halfCameraHeight + halfCircle, mainCamera.transform.position.y + halfCameraHeight - halfCircle));
-                var shapeSpeed = new Vector2(UnityEngine.Random.Range(-0.1f, 0.1f), UnityEngine.Random.Range(-0.1f, 0.1f));
-                var isDynamic = DynamicRandomProbability(0.75f);
-                if(!isDynamic){
-                     shapeSpeed = new Vector2(0.0f, 0.0f);
+                var isDynamic = true ;               
+                if(shape.initialVelocity == new Vector2(0.0f, 0.0f)){
+                    isDynamic = false;
                 }
-                var id = SystemDataUtility.AddShapeDataToSystems(shapeSize, shapePosition, shapeSpeed, isDynamic);
-                SystemDataUtility.CreateCircle(id, shapePosition, shapeSize);
-            }
+                var isProtected = RandomProbability(ecsManager.Config.protectionProbability);
+                var id = SystemDataUtility.AddShapeDataToSystems(shape.initialSize, shape.initialPosition, shape.initialVelocity, isDynamic, isProtected);
+                SystemDataUtility.CreateCircle(id, shape.initialPosition, shape.initialSize);
+            } 
         }
 
-        public bool DynamicRandomProbability (float probability) {
+        public bool RandomProbability (float probability) {
             return UnityEngine.Random.value < probability;
         }
 
-        private void SpawnCircleCollisionPath()
+        /*private void SpawnCircleCollisionPath()
         {
             var shapeOneSize = 1;
             var shapeOnePosition = new Vector2(5, 0);
@@ -56,7 +53,7 @@ namespace circlesSystem
             var shapeTwoSpeed = new Vector2(0.1f,0);
             var idTwo = SystemDataUtility.AddShapeDataToSystems(shapeTwoSize, shapeTwoPosition, shapeTwoSpeed, true);
             SystemDataUtility.CreateCircle(idTwo, shapeTwoPosition, shapeTwoSize);
-        }
+        }*/
 
         public void UpdateSystem()
         {
@@ -67,7 +64,7 @@ namespace circlesSystem
             }
             foreach (var shape in worldData.WorldData.toCreate)
             {
-                var id = SystemDataUtility.AddShapeDataToSystems(shape.size, shape.position, shape.speed, true);
+                var id = SystemDataUtility.AddShapeDataToSystems(shape.size, shape.position, shape.speed, true, false);
                 SystemDataUtility.CreateCircle(id, shape.position, shape.size);
             }
             ClearDictionnaries();
