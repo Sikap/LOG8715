@@ -22,7 +22,7 @@ namespace leftScreenSystem
 
         public void UpdateSystem()
         {
-            // processing logic here
+            // DO NOT FORGET TO CHECK IF CIRCLE IS PROCESSABLE SystemDataUtility.IsProcessable(id)
 
         }
     }

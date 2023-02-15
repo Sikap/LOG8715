@@ -24,6 +24,9 @@ namespace collisionSystem
         public void UpdateSystem()
         {
             ClearDictionnaries();
+            var newPositionCollision = new Dictionary<uint, PositionComponent>();
+            var newSpeedCollision = new Dictionary<uint, SpeedComponent>();
+            var newSizeCollision = new Dictionary<uint, SizeComponent>(); 
             foreach (KeyValuePair<uint, PositionComponent> shapeOne in worldData.WorldData.circlesPosition)
             {
                 var shapeOnePosition = shapeOne.Value.position;
@@ -84,13 +87,13 @@ namespace collisionSystem
                                 newSpeed1 = shapeOneSpeed;
                             }
                             
-                            worldData.WorldData.newPositionCollision[shapeOne.Key] = new PositionComponent { position = newPosition1 };
-                            worldData.WorldData.newSpeedCollision[shapeOne.Key] = new SpeedComponent { speed = newSpeed1 };
-                            worldData.WorldData.newSizeCollision[shapeOne.Key] = new SizeComponent { size = shapeOneSize };
+                            newPositionCollision[shapeOne.Key] = new PositionComponent { position = newPosition1 };
+                            newSpeedCollision[shapeOne.Key] = new SpeedComponent { speed = newSpeed1 };
+                            newSizeCollision[shapeOne.Key] = new SizeComponent { size = shapeOneSize };
                             worldData.WorldData.circlesCollision[shapeOne.Key] = new CollisionComponent { isCollision = true };
-                            worldData.WorldData.newPositionCollision[shapeTwo.Key] = new PositionComponent { position = newPosition2 };
-                            worldData.WorldData.newSpeedCollision[shapeTwo.Key] = new SpeedComponent { speed = newSpeed2 };
-                            worldData.WorldData.newSizeCollision[shapeTwo.Key] = new SizeComponent { size = shapeTwoSize };
+                            newPositionCollision[shapeTwo.Key] = new PositionComponent { position = newPosition2 };
+                            newSpeedCollision[shapeTwo.Key] = new SpeedComponent { speed = newSpeed2 };
+                            newSizeCollision[shapeTwo.Key] = new SizeComponent { size = shapeTwoSize };
                             worldData.WorldData.circlesCollision[shapeTwo.Key] = new CollisionComponent { isCollision = true };
                         }else {
                             worldData.WorldData.circlesCollision[shapeOne.Key] = new CollisionComponent { isCollision = false };
@@ -99,35 +102,37 @@ namespace collisionSystem
                     }
                 }
             }
-            foreach (KeyValuePair<uint, PositionComponent> shape in worldData.WorldData.newPositionCollision)
+            foreach (KeyValuePair<uint, PositionComponent> shape in newPositionCollision)
             {
-                if(worldData.WorldData.newSizeCollision.ContainsKey(shape.Key) && worldData.WorldData.newSizeCollision[shape.Key].size <= 0) {
+                if(newSizeCollision.ContainsKey(shape.Key) && newSizeCollision[shape.Key].size <= 0) {
                     worldData.WorldData.toDestroy[shape.Key] = new DestroyComponent{ toDestroy = true };
-                } else if (worldData.WorldData.newSizeCollision.ContainsKey(shape.Key) && worldData.WorldData.newSizeCollision[shape.Key].size >= 10) {
+                } else if (newSizeCollision.ContainsKey(shape.Key) && newSizeCollision[shape.Key].size >= 10) {
                     worldData.WorldData.toDestroy[shape.Key] = new DestroyComponent{ toDestroy = true };                    
                     var zeroRadVector = new Vector2(1,0);
-                    var motionAngle = Vector2.Angle(zeroRadVector, worldData.WorldData.newSpeedCollision[shape.Key].speed) * Mathf.Deg2Rad;
+                    var motionAngle = Vector2.Angle(zeroRadVector, newSpeedCollision[shape.Key].speed) * Mathf.Deg2Rad;
 
-                    var smallerCircleOnePositionX = worldData.WorldData.newPositionCollision[shape.Key].position.x + ((worldData.WorldData.newSizeCollision[shape.Key].size/4) * Mathf.Cos(motionAngle));
-                    var smallerCircleOnePositionY = worldData.WorldData.newPositionCollision[shape.Key].position.y + ((worldData.WorldData.newSizeCollision[shape.Key].size/4) * Mathf.Sin(motionAngle));
+                    var smallerCircleOnePositionX = newPositionCollision[shape.Key].position.x + ((newSizeCollision[shape.Key].size/4) * Mathf.Cos(motionAngle));
+                    var smallerCircleOnePositionY = newPositionCollision[shape.Key].position.y + ((newSizeCollision[shape.Key].size/4) * Mathf.Sin(motionAngle));
 
                     var smallerCircleOnePosition = new Vector2(smallerCircleOnePositionX, smallerCircleOnePositionY);
-                    var smallerCircleOneSize = worldData.WorldData.newSizeCollision[shape.Key].size/2;
-                    var smallerCircleOneSpeed = worldData.WorldData.newSpeedCollision[shape.Key].speed;
+                    var smallerCircleOneSize = newSizeCollision[shape.Key].size/2;
+                    var smallerCircleOneSpeed = newSpeedCollision[shape.Key].speed;
                     
-                    var smallerCircleTwoPositionX = worldData.WorldData.newPositionCollision[shape.Key].position.x + ((worldData.WorldData.newSizeCollision[shape.Key].size/4) * Mathf.Cos(motionAngle + Mathf.PI));
-                    var smallerCircleTwoPositionY = worldData.WorldData.newPositionCollision[shape.Key].position.y + ((worldData.WorldData.newSizeCollision[shape.Key].size/4) * Mathf.Sin(motionAngle + Mathf.PI));                 
+                    var smallerCircleTwoPositionX = newPositionCollision[shape.Key].position.x + ((newSizeCollision[shape.Key].size/4) * Mathf.Cos(motionAngle + Mathf.PI));
+                    var smallerCircleTwoPositionY = newPositionCollision[shape.Key].position.y + ((newSizeCollision[shape.Key].size/4) * Mathf.Sin(motionAngle + Mathf.PI));                 
 
                     var smallerCircleTwoPosition = new Vector2(smallerCircleTwoPositionX, smallerCircleTwoPositionY);
-                    var smallerCircleTwoSize = worldData.WorldData.newSizeCollision[shape.Key].size/2;
-                    var smallerCircleTwoSpeed = worldData.WorldData.newSpeedCollision[shape.Key].speed * -1;
+                    var smallerCircleTwoSize = newSizeCollision[shape.Key].size/2;
+                    var smallerCircleTwoSpeed = newSpeedCollision[shape.Key].speed * -1;
 
-                    worldData.WorldData.toCreate.Add(new CreationComponent{ size = smallerCircleOneSize, position = smallerCircleOnePosition, speed = smallerCircleOneSpeed });
-                    worldData.WorldData.toCreate.Add(new CreationComponent{ size = smallerCircleTwoSize, position = smallerCircleTwoPosition, speed = smallerCircleTwoSpeed });
+                    var idOne = SystemDataUtility.AddShapeDataToSystems(smallerCircleOneSize, smallerCircleOnePosition, smallerCircleOneSpeed, true, false);
+                    var idTwo = SystemDataUtility.AddShapeDataToSystems(smallerCircleTwoSize, smallerCircleTwoPosition, smallerCircleTwoSpeed, true, false);
+                    worldData.WorldData.toCreate.Add(idOne, new CreationComponent{ toCreate = true });
+                    worldData.WorldData.toCreate.Add(idTwo, new CreationComponent{ toCreate = true });
                 } else {
                     worldData.WorldData.circlesPosition[shape.Key] = shape.Value;
-                    worldData.WorldData.circlesSpeed[shape.Key] = worldData.WorldData.newSpeedCollision[shape.Key];
-                    worldData.WorldData.circlesSize[shape.Key] = worldData.WorldData.newSizeCollision[shape.Key];
+                    worldData.WorldData.circlesSpeed[shape.Key] = newSpeedCollision[shape.Key];
+                    worldData.WorldData.circlesSize[shape.Key] = newSizeCollision[shape.Key];
                 }
             }
         }
@@ -140,9 +145,6 @@ namespace collisionSystem
 
         public void ClearDictionnaries() {
             worldData.WorldData.circlesCollision.Clear();
-            worldData.WorldData.newPositionCollision.Clear();
-            worldData.WorldData.newSpeedCollision.Clear();
-            worldData.WorldData.newSizeCollision.Clear();
         }
     }
 }

@@ -95,7 +95,6 @@ namespace borderSystem
         public void UpdateSystem()
         {
             ClearDictionnaries();
-            global::ECSManager ecsManager = global::ECSManager.Instance;
             foreach (KeyValuePair<uint, PositionComponent> shape in worldData.WorldData.circlesPosition)
             {            
                 var size = worldData.WorldData.circlesSize[shape.Key].size;

@@ -14,9 +14,7 @@ namespace protectionSystem
         {
             Name = name;
         }
-        public bool ProtectionRandomProbability (float probability) {
-            return UnityEngine.Random.value < probability;
-        }
+
         public bool IsProtectionOver (uint id) {
             return Time.time > worldData.WorldData.circleProtectionStartTime[id].startProtectionTime + ecsManager.Config.protectionDuration;
         }
@@ -39,7 +37,7 @@ namespace protectionSystem
                     worldData.WorldData.circlesProtection[shape.Key] = new ProtectedComponent { isProtected = false };
                 }
                 if(worldData.WorldData.circlesIsDynamic[shape.Key].isDynamic &&  worldData.WorldData.circlesSize[shape.Key].size <= ecsManager.Config.protectionSize){
-                    var isProtected = ProtectionRandomProbability(ecsManager.Config.protectionProbability);
+                    var isProtected = SystemDataUtility.RandomProbability(ecsManager.Config.protectionProbability);
                     if(isProtected && worldData.WorldData.circlesProtection[shape.Key].isProtected == false)
                     {
                         if(!worldData.WorldData.circleProtectionStartTime.ContainsKey(shape.Key)){

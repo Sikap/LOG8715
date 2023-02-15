@@ -21,11 +21,11 @@ namespace resizeSystem
 
         public void UpdateSystem()
         {
-            foreach (KeyValuePair<uint, SizeComponent> shape in worldData.WorldData.newSizeCollision)
+            foreach (KeyValuePair<uint, CollisionComponent> shape in worldData.WorldData.circlesCollision)
             {
-                if (worldData.WorldData.circlesSize.ContainsKey(shape.Key))
+                if (SystemDataUtility.IsProcessable(shape.Key) && worldData.WorldData.circlesSize.ContainsKey(shape.Key))
                 {
-                    SystemDataUtility.UpdateShapeSize(shape.Key, shape.Value.size);
+                    SystemDataUtility.UpdateShapeSize(shape.Key, worldData.WorldData.circlesSize[shape.Key].size);
                 }
             }
         }

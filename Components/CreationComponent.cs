@@ -4,7 +4,5 @@ using UnityEngine;
 
 public struct CreationComponent
 {
-    public int size;
-    public Vector2 position;
-    public Vector2 speed;
+    public bool toCreate;
 }

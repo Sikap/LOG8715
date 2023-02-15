@@ -7,7 +7,7 @@ namespace worldData{
 
     public class WorldData {
         // Spawn
-        public static List<CreationComponent> toCreate = new List<CreationComponent>();
+        public static Dictionary<uint, CreationComponent> toCreate = new Dictionary<uint, CreationComponent>();
         public static Dictionary<uint, DestroyComponent> toDestroy = new Dictionary<uint, DestroyComponent>();
         // Protection
         public static Dictionary<uint, ProtectedComponent> circlesProtection = new Dictionary<uint, ProtectedComponent>();
@@ -20,10 +20,7 @@ namespace worldData{
         public static Dictionary<uint, PositionComponent> circleBorderBouncePosition = new Dictionary<uint, PositionComponent>();
         public static Dictionary<uint, SpeedComponent> circleBorderBounceSpeed = new Dictionary<uint, SpeedComponent>();
         //CollisionSystem 
-        public static Dictionary<uint, CollisionComponent> circlesCollision = new Dictionary<uint, CollisionComponent>();
-        public static Dictionary<uint, PositionComponent> newPositionCollision = new Dictionary<uint, PositionComponent>();
-        public static Dictionary<uint, SpeedComponent> newSpeedCollision = new Dictionary<uint, SpeedComponent>();
-        public static Dictionary<uint, SizeComponent> newSizeCollision = new Dictionary<uint, SizeComponent>();   
+        public static Dictionary<uint, CollisionComponent> circlesCollision = new Dictionary<uint, CollisionComponent>();  
         //Resize 
         public static Dictionary<uint, SizeComponent> circlesSize = new Dictionary<uint,SizeComponent>();
         //4x

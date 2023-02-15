@@ -11,10 +11,20 @@ public class SystemDataUtility
         return id++;
     }
 
-    public static void CreateCircle(uint id, Vector2 position, int size) {
+    //------------------------------------------------//
+    // Abstraction of ECSmanager public functions     //
+    // to allow verifications and other modifications //
+    //------------------------------------------------//
+
+    public static void CreateCircle(uint id) {
         global::ECSManager ecsManager = global::ECSManager.Instance;
-        ecsManager.CreateShape(id, size);
-        ecsManager.UpdateShapePosition(id, position);
+        if (worldData.WorldData.circlesSize.ContainsKey(id) && worldData.WorldData.circlesPosition.ContainsKey(id))
+        {
+            var size = worldData.WorldData.circlesSize[id].size;
+            var position = worldData.WorldData.circlesPosition[id].position;
+            ecsManager.CreateShape(id, size);
+            ecsManager.UpdateShapePosition(id, position);
+        }
     }
 
     public static void DestroyShape(uint id) {
@@ -37,6 +47,11 @@ public class SystemDataUtility
         global::ECSManager ecsManager = global::ECSManager.Instance;
         ecsManager.UpdateShapePosition(id, position);
     }
+
+    //----------------------------------------------------//
+    // Simplify data manipulation for adding and removing //
+    // entities from the different dictionnaries          //
+    //----------------------------------------------------//
 
     public static uint AddShapeDataToSystems(int shapeSize, Vector2 shapePosition, Vector2 shapeSpeed, bool shapeDynamic, bool shapeProtection) {
         id++;
@@ -88,6 +103,18 @@ public class SystemDataUtility
             worldData.WorldData.circlesProtection.Remove(id);
         }
     }
+
+    public static bool IsProcessable(uint id) {
+        if (!worldData.WorldData.toCreate.ContainsKey(id) && !worldData.WorldData.toDestroy.ContainsKey(id)) {
+            return true;
+        }
+        return false;
+    }
+
+    public static bool RandomProbability (float probability) {
+        return UnityEngine.Random.value < probability;
+    }
+
     public static bool clickInCircle(Vector2 clickPosition, Vector2 circlePosition, float size) {
         return Vector2.Distance(clickPosition, circlePosition) < size;
     }

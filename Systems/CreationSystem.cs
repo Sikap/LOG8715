@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace destroySystem
+namespace creationSystem
 {
 
-    public class DestroySystem : ISystem
+    public class CreationSystem : ISystem
     {
 
         public string Name { get; private set; }
-        public DestroySystem(string name)
+        public CreationSystem(string name)
         {
             Name = name;
         }
@@ -22,12 +22,11 @@ namespace destroySystem
 
         public void UpdateSystem()
         {
-            foreach (KeyValuePair<uint,DestroyComponent> shape in worldData.WorldData.toDestroy)
-            {            
-                SystemDataUtility.RemoveShapeDataFromSystems(shape.Key);
-                SystemDataUtility.DestroyShape(shape.Key);
+            foreach (KeyValuePair<uint, CreationComponent> shape in worldData.WorldData.toCreate)
+            {
+                SystemDataUtility.CreateCircle(shape.Key);
             }
-            worldData.WorldData.toDestroy.Clear();
+            worldData.WorldData.toCreate.Clear();
         }
     }
 }
