@@ -86,12 +86,18 @@ namespace borderSystem
             worldData.WorldData.circleBorderBouncePosition.Clear();
             worldData.WorldData.circleBorderBounceSpeed.Clear();
         }
+        public void UpdateInput() 
+        {
+            if (Input.GetMouseButtonDown(0)){
+                SystemDataUtility.handleClickEvent();
+            }
+        }
         public void UpdateSystem()
         {
             ClearDictionnaries();
             global::ECSManager ecsManager = global::ECSManager.Instance;
             foreach (KeyValuePair<uint, PositionComponent> shape in worldData.WorldData.circlesPosition)
-            {
+            {            
                 var size = worldData.WorldData.circlesSize[shape.Key].size;
                 var speed =worldData.WorldData.circlesSpeed[shape.Key].speed;
                 Vector2 shapePosition = new Vector2(shape.Value.position.x , shape.Value.position.y);

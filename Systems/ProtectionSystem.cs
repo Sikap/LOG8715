@@ -20,6 +20,12 @@ namespace ProtectionSystems
         public bool CooldownIsOver (uint id,float curentTime) {
             return worldData.WorldData.circleProtectionStartTime[id].startProtectionTime + ecsManager.Config.protectionCooldown > curentTime;
         }
+        public void UpdateInput() 
+        {
+            if (Input.GetMouseButtonDown(0)){
+                SystemDataUtility.handleClickEvent();
+            }
+        }
         public void UpdateSystem()
         {
             // processing logic here

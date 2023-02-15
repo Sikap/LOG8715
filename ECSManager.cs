@@ -131,6 +131,9 @@ public class ECSManager : MonoBehaviour
     #region Color Management
     private void Update()
     {
+        foreach (var system in _allSystems.Where(system => Config.SystemsEnabled[system.Name])) {
+            system.UpdateInput();
+        }
         foreach (var id in _nextColorUpdate.Keys)
         {
             if (!_spriteRenderersCache.ContainsKey(id))
@@ -155,6 +158,7 @@ public class ECSManager : MonoBehaviour
 
 public interface ISystem
 {
+    void UpdateInput();
     void UpdateSystem();
     string Name { get; }
 }

@@ -13,6 +13,12 @@ namespace DestroySystems
         {
             Name = name;
         }
+        public void UpdateInput() 
+        {
+            if (Input.GetMouseButtonDown(0)){
+                SystemDataUtility.handleClickEvent();
+            }
+        }
 
         public void UpdateSystem()
         {

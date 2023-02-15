@@ -21,34 +21,34 @@ MonoBehaviour:
   circleInstancesToSpawn:
   - initialSize: 3
     initialPosition: {x: -15, y: -5}
-    initialVelocity: {x: 0.1, y: 0.1}
+    initialVelocity: {x: 0.01, y: 0.01}
   - initialSize: 5
     initialPosition: {x: 14, y: -2}
-    initialVelocity: {x: -0.1, y: -0.1}
+    initialVelocity: {x: -0.01, y: -0.01}
   - initialSize: 7
     initialPosition: {x: -20, y: -10}
-    initialVelocity: {x: 0.1, y: -0.1}
+    initialVelocity: {x: 0.01, y: -0.01}
   - initialSize: 4
     initialPosition: {x: 12, y: 3}
-    initialVelocity: {x: -0.1, y: 0.1}
+    initialVelocity: {x: -0.01, y: 0.01}
   - initialSize: 5
     initialPosition: {x: 14, y: 10}
     initialVelocity: {x: 0, y: 0}
   - initialSize: 9
     initialPosition: {x: 9, y: -3}
-    initialVelocity: {x: 0.1, y: -0.2}
+    initialVelocity: {x: 0.01, y: -0.02}
   - initialSize: 3
     initialPosition: {x: -24, y: -11}
     initialVelocity: {x: 0, y: 0}
   - initialSize: 2
     initialPosition: {x: -17, y: -7}
-    initialVelocity: {x: 0.3, y: 0.5}
+    initialVelocity: {x: 0.03, y: 0.05}
   - initialSize: 1
     initialPosition: {x: 8, y: -10}
-    initialVelocity: {x: 0.1, y: 0.2}
+    initialVelocity: {x: 0.01, y: 0.02}
   - initialSize: 6
     initialPosition: {x: -9, y: 6}
-    initialVelocity: {x: 0.2, y: 0.7}
+    initialVelocity: {x: 0.02, y: 0.07}
   systemsEnabled:
     keys:
     - 

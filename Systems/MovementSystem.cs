@@ -13,13 +13,18 @@ namespace movementSystems
         {
             Name = name;
         }
-
+        public void UpdateInput() 
+        {
+            if (Input.GetMouseButtonDown(0)){
+                SystemDataUtility.handleClickEvent();
+            }
+        }
         public void MoveObject() 
         {
             global::ECSManager ecsManager = global::ECSManager.Instance;
             var toModify = new Dictionary<uint, PositionComponent>();
             foreach (KeyValuePair<uint,DynamicComponent> entry in worldData.WorldData.circlesIsDynamic)
-            {
+            {            
                 if (!worldData.WorldData.circlesCollision.ContainsKey(entry.Key) || true)
                 {
                     var xPosition = worldData.WorldData.circlesPosition[entry.Key].position.x + worldData.WorldData.circlesSpeed[entry.Key].speed.x;

@@ -7,6 +7,7 @@ namespace colorSystems
 
     public class ColorSystem : ISystem
     {
+        global::ECSManager ecsManager = global::ECSManager.Instance;                        
 
         public string Name { get; private set; }
         public ColorSystem(string name)
@@ -17,30 +18,29 @@ namespace colorSystems
         public bool clickInCircle(Vector2 clickPosition, Vector2 circlePosition, float size) {
             return Vector2.Distance(clickPosition, circlePosition) < size;
         }
+        public void UpdateInput() 
+        {
+            if (Input.GetMouseButtonDown(0)){
+                SystemDataUtility.handleClickEvent();
+            }
+        }
         public void UpdateSystem()        
         {            
-            global::ECSManager ecsManager = global::ECSManager.Instance;
             foreach (KeyValuePair<uint, PositionComponent> shape in worldData.WorldData.circlesPosition)
-            {
+            {   
+                var size = worldData.WorldData.circlesSize[shape.Key].size;
                 if(!worldData.WorldData.circlesIsDynamic[shape.Key].isDynamic){
                     ecsManager.UpdateShapeColor(shape.Key, Color.red);
                 } else {
-                    Vector2 clickScreenPosition = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
-                    Vector2 clickWorldPosition = Camera.main.ScreenToWorldPoint(clickScreenPosition);
-                    var size = worldData.WorldData.circlesSize[shape.Key].size;
-                    if (Input.GetMouseButtonDown(0) && clickInCircle(clickWorldPosition,shape.Value.position,size)){
-                        ecsManager.UpdateShapeColor(shape.Key, new Color(255f/255f, 192f/255f, 203f/255f));
-                    }
-                    if (worldData.WorldData.circlesCollision[shape.Key].isCollision){
+                    if(worldData.WorldData.circlesCollision.ContainsKey(shape.Key) && worldData.WorldData.circlesCollision[shape.Key].isCollision){
                         ecsManager.UpdateShapeColor(shape.Key, Color.green);
                     } else {
-                        if (size == 9){
+                        if (size == (ecsManager.Config.explosionSize - 1)){
                             ecsManager.UpdateShapeColor(shape.Key, new Color(1.0f, 0.64f, 0.0f));
                         } else {
                             ecsManager.UpdateShapeColor(shape.Key, Color.blue);
                         }
                     }
-
                 }
             }                        
         }

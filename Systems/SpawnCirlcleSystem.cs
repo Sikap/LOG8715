@@ -13,7 +13,6 @@ namespace circlesSystem
         {
             Name = name;
             UnityEngine.Random.InitState(1);
-            //SpawnCircleCollisionPath();
             SpawnCircle(10);
         }
 
@@ -40,25 +39,18 @@ namespace circlesSystem
             return UnityEngine.Random.value < probability;
         }
 
-        /*private void SpawnCircleCollisionPath()
+        public void UpdateInput() 
         {
-            var shapeOneSize = 1;
-            var shapeOnePosition = new Vector2(5, 0);
-            var shapeOneSpeed = new Vector2(-0.1f,0);
-            var idOne = SystemDataUtility.AddShapeDataToSystems(shapeOneSize, shapeOnePosition, shapeOneSpeed, true);
-            SystemDataUtility.CreateCircle(idOne, shapeOnePosition, shapeOneSize);
-            
-            var shapeTwoSize = 9;
-            var shapeTwoPosition = new Vector2(-5, 0);
-            var shapeTwoSpeed = new Vector2(0.1f,0);
-            var idTwo = SystemDataUtility.AddShapeDataToSystems(shapeTwoSize, shapeTwoPosition, shapeTwoSpeed, true);
-            SystemDataUtility.CreateCircle(idTwo, shapeTwoPosition, shapeTwoSize);
-        }*/
+            if (Input.GetMouseButtonDown(0)){
+                SystemDataUtility.handleClickEvent();
+            }
+        }
 
         public void UpdateSystem()
         {
+          
             foreach (KeyValuePair<uint,DestroyComponent> shape in worldData.WorldData.toDestroy)
-            {
+            {            
                 SystemDataUtility.RemoveShapeDataFromSystems(shape.Key);
                 SystemDataUtility.DestroyShape(shape.Key);
             }

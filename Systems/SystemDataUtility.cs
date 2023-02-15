@@ -1,4 +1,7 @@
 using UnityEngine;
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using MovementSystem = movementSystems;
 using ResizeSystem = resizeSystems;
 using CollisionSystem = collisionSystems;
@@ -85,5 +88,24 @@ public class SystemDataUtility
             worldData.WorldData.circlesProtection.Remove(id);
         }
     }
+    public static bool clickInCircle(Vector2 clickPosition, Vector2 circlePosition, float size) {
+        return Vector2.Distance(clickPosition, circlePosition) < size;
+    }
 
+    public static void handleClickEvent() {
+        global::ECSManager ecsManager = global::ECSManager.Instance;
+        foreach (KeyValuePair<uint, PositionComponent> shape in worldData.WorldData.circlesPosition){
+            Vector2 clickScreenPosition = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+            Vector2 clickWorldPosition = Camera.main.ScreenToWorldPoint(clickScreenPosition);
+            var size = worldData.WorldData.circlesSize[shape.Key].size/2.0f;
+            if (worldData.WorldData.circlesIsDynamic[shape.Key].isDynamic && clickInCircle(clickWorldPosition,shape.Value.position,size)){
+                ecsManager.UpdateShapeColor(shape.Key, new Color(255f/255f, 192f/255f, 203f/255f));
+                /*if(size>=2){
+
+                }else{
+
+                }*/
+            }
+        }
+    }
 }

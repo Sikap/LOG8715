@@ -15,7 +15,7 @@ public class RegisterSystems
         var toRegister = new List<ISystem>();
 
         // Add your systems here
-        toRegister.Add(new SpawnCirclesSystem("SpawnCirclesSystem"));
+        toRegister.Add(new SpawnCirclesSystem("SpawnCirclesSystem"));        
         toRegister.Add(new ProtectionSystem("ProtectionSystem"));
         toRegister.Add(new MovementSystem("MovementSystem"));
         toRegister.Add(new BorderSystem("BorderSystem"));
