@@ -36,10 +36,15 @@ namespace colorSystems
                         ecsManager.UpdateShapeColor(shape.Key, Color.green);
                     } else {
                         if (size == (ecsManager.Config.explosionSize - 1)){
-                            ecsManager.UpdateShapeColor(shape.Key, new Color(1.0f, 0.64f, 0.0f));
+                            ecsManager.UpdateShapeColor(shape.Key, new Color(0xEE / 255f, 0x76 / 255f, 0x00 / 255f));
                         } else {
-                            ecsManager.UpdateShapeColor(shape.Key, Color.blue);
+                            if(worldData.WorldData.circlesProtection[shape.Key].isProtected){
+                                ecsManager.UpdateShapeColor(shape.Key, Color.yellow);
+                            }else{
+                                ecsManager.UpdateShapeColor(shape.Key, Color.blue);
+                            }
                         }
+                        
                     }
                 }
             }                        

@@ -31,7 +31,7 @@ namespace circlesSystem
                 }
                 var isProtected = RandomProbability(ecsManager.Config.protectionProbability);
                 var id = SystemDataUtility.AddShapeDataToSystems(shape.initialSize, shape.initialPosition, shape.initialVelocity, isDynamic, isProtected);
-                SystemDataUtility.CreateCircle(id, shape.initialPosition, shape.initialSize);
+                SystemDataUtility.CreateCircle(id, shape.initialPosition, shape.initialSize); 
             } 
         }
 

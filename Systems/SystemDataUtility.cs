@@ -62,6 +62,9 @@ public class SystemDataUtility
         if (!worldData.WorldData.circlesProtection.ContainsKey(id))
         {
             worldData.WorldData.circlesProtection.Add(id, new ProtectedComponent { isProtected = shapeProtection });
+            if(shapeProtection && !worldData.WorldData.circleProtectionStartTime.ContainsKey(id) ){
+                worldData.WorldData.circleProtectionStartTime.Add(id, new StartProtectionTimeComponent { startProtectionTime = Time.time });
+            }
         }
         return id;
     }
@@ -99,7 +102,7 @@ public class SystemDataUtility
             Vector2 clickWorldPosition = Camera.main.ScreenToWorldPoint(clickScreenPosition);
             var size = worldData.WorldData.circlesSize[shape.Key].size/2.0f;
             if (worldData.WorldData.circlesIsDynamic[shape.Key].isDynamic && clickInCircle(clickWorldPosition,shape.Value.position,size)){
-                ecsManager.UpdateShapeColor(shape.Key, new Color(255f/255f, 192f/255f, 203f/255f));
+                ecsManager.UpdateShapeColor(shape.Key, new Color(1.0f, 0.41f, 0.71f));
                 /*if(size>=2){
 
                 }else{
