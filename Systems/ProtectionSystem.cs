@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ProtectionSystems
+namespace protectionSystem
 {
 
     public class ProtectionSystem : ISystem

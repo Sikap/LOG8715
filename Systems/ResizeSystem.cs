@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace resizeSystems
+namespace resizeSystem
 {
     public class ResizeSystem : ISystem
     {

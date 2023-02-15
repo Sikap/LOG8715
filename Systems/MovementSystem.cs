@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace movementSystems
+namespace movementSystem
 {
     public class MovementSystem : ISystem
     {

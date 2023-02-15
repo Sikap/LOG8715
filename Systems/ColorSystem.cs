@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 
-namespace colorSystems
+namespace colorSystem
 {
 
     public class ColorSystem : ISystem

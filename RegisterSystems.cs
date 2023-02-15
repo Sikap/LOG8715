@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using circlesSystem;
-using movementSystems;
-using collisionSystems;
-using resizeSystems;
-using colorSystems;
+using movementSystem;
+using collisionSystem;
+using resizeSystem;
+using colorSystem;
 using borderSystem;
-using ProtectionSystems;
-
+using protectionSystem;
+using leftScreenSystem;
 public class RegisterSystems
 {
     public static List<ISystem> GetListOfSystems()
@@ -22,6 +22,7 @@ public class RegisterSystems
         toRegister.Add(new CollisionSystem("CollisionSystem"));
         toRegister.Add(new ResizeSystem("ResizeSystem"));
         toRegister.Add(new ColorSystem("ColorSystem"));
+        toRegister.Add(new LeftScreenSystem("LeftScreenSystem"));
 
         return toRegister;
     }

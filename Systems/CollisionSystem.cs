@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-namespace collisionSystems
+namespace collisionSystem
 {
 
     public class CollisionSystem : ISystem

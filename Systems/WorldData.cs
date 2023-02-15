@@ -26,6 +26,9 @@ namespace worldData{
         public static Dictionary<uint, SizeComponent> newSizeCollision = new Dictionary<uint, SizeComponent>();   
         //Resize 
         public static Dictionary<uint, SizeComponent> circlesSize = new Dictionary<uint,SizeComponent>();
+        //4x
+        public static Dictionary<uint, LeftScreenComponent> cicrlesLeftScreen = new Dictionary<uint,LeftScreenComponent>();
+
     }
 
 }

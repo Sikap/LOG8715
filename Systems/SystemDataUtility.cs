@@ -2,9 +2,6 @@ using UnityEngine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using MovementSystem = movementSystems;
-using ResizeSystem = resizeSystems;
-using CollisionSystem = collisionSystems;
 
 public class SystemDataUtility
 {
