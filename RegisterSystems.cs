@@ -9,6 +9,7 @@ using protectionSystem;
 using leftScreenSystem;
 using creationSystem;
 using destroySystem;
+using explosionSystem;
 
 public class RegisterSystems
 {
@@ -26,6 +27,7 @@ public class RegisterSystems
         toRegister.Add(new BorderSystem("BorderSystem"));
         toRegister.Add(new CollisionSystem("CollisionSystem"));
         toRegister.Add(new ResizeSystem("ResizeSystem"));
+        toRegister.Add(new ExplosionSystem("ExplosionSystem"));
         toRegister.Add(new ColorSystem("ColorSystem"));
         toRegister.Add(new LeftScreenSystem("LeftScreenSystem"));
 

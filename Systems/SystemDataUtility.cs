@@ -29,7 +29,10 @@ public class SystemDataUtility
 
     public static void DestroyShape(uint id) {
         global::ECSManager ecsManager = global::ECSManager.Instance;
-        ecsManager.DestroyShape(id);
+        if (worldData.WorldData.circlesPosition.ContainsKey(id))
+        {
+            ecsManager.DestroyShape(id);
+        }
     }
 
     public static void UpdateShape(uint id, Vector2 position, int size) {

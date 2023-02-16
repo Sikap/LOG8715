@@ -11,6 +11,7 @@ namespace destroySystem
         public string Name { get; private set; }
         public DestroySystem(string name)
         {
+            worldData.WorldData.toDestroy.Clear();
             Name = name;
         }
         public void UpdateInput() 
@@ -24,8 +25,8 @@ namespace destroySystem
         {
             foreach (KeyValuePair<uint,DestroyComponent> shape in worldData.WorldData.toDestroy)
             {            
-                SystemDataUtility.RemoveShapeDataFromSystems(shape.Key);
                 SystemDataUtility.DestroyShape(shape.Key);
+                SystemDataUtility.RemoveShapeDataFromSystems(shape.Key);
             }
             worldData.WorldData.toDestroy.Clear();
         }

@@ -7,7 +7,7 @@ namespace circlesSystem
 {
     public class SpawnCirclesSystem : ISystem
     {
-        global::ECSManager ecsManager = global::ECSManager.Instance;                        
+        global::ECSManager ecsManager = global::ECSManager.Instance;
         public string Name { get; private set; }
         public SpawnCirclesSystem(string name)
         {

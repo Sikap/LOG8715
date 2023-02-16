@@ -34,7 +34,7 @@ namespace colorSystem
                     if(!worldData.WorldData.circlesIsDynamic[shape.Key].isDynamic){
                         ecsManager.UpdateShapeColor(shape.Key, Color.red);
                     } else {
-                        if(worldData.WorldData.circlesCollision.ContainsKey(shape.Key) && worldData.WorldData.circlesCollision[shape.Key].isCollision){
+                        if(worldData.WorldData.circlesCollision.ContainsKey(shape.Key)){
                             ecsManager.UpdateShapeColor(shape.Key, Color.green);
                         } else {
                             if (size == (ecsManager.Config.explosionSize - 1)){

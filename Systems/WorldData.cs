@@ -9,6 +9,7 @@ namespace worldData{
         // Spawn
         public static Dictionary<uint, CreationComponent> toCreate = new Dictionary<uint, CreationComponent>();
         public static Dictionary<uint, DestroyComponent> toDestroy = new Dictionary<uint, DestroyComponent>();
+        public static Dictionary<uint, ExplosionComponent> toExplode = new Dictionary<uint, ExplosionComponent>();
         // Protection
         public static Dictionary<uint, ProtectedComponent> circlesProtection = new Dictionary<uint, ProtectedComponent>();
         public static Dictionary<uint, StartProtectionTimeComponent> circleProtectionStartTime = new Dictionary<uint, StartProtectionTimeComponent>();

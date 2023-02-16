@@ -11,6 +11,7 @@ namespace creationSystem
         public string Name { get; private set; }
         public CreationSystem(string name)
         {
+            worldData.WorldData.toCreate.Clear();
             Name = name;
         }
         public void UpdateInput() 
