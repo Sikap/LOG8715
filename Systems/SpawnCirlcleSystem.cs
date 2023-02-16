@@ -13,10 +13,10 @@ namespace circlesSystem
         {
             Name = name;
             UnityEngine.Random.InitState(1);
-            SpawnCircle(10);
+            SpawnCircle();
         }
 
-        public void SpawnCircle(int numOfCircle)
+        public void SpawnCircle()
         {  
             Camera mainCamera = Camera.main;
             float halfCameraWidth = mainCamera.aspect * mainCamera.orthographicSize;
@@ -42,8 +42,6 @@ namespace circlesSystem
             }
         }
 
-        public void UpdateSystem()
-        {
-        }
+        public void UpdateSystem(){}
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public struct CollisionComponent
-{
-    public bool isCollision;
+{    
+    public uint circleMain;
+    public uint circleColliding;
 }

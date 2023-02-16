@@ -21,13 +21,8 @@ namespace resizeSystem
 
         public void UpdateSystem()
         {
-            foreach (KeyValuePair<uint, CollisionComponent> shape in worldData.WorldData.circlesCollision)
-            {
-                if (SystemDataUtility.IsProcessable(shape.Key) && worldData.WorldData.circlesSize.ContainsKey(shape.Key))
-                {
-                    SystemDataUtility.UpdateShapeSize(shape.Key, worldData.WorldData.circlesSize[shape.Key].size);
-                }
-            }
+            SystemDataUtility.ResizeCircles(false);
         }
+        
     }
 }

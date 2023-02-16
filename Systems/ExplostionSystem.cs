@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ExplostionSystems 
+namespace explosionSystem 
 {
 
-    public class ExplostionSystem : ISystem
+    public class ExplosionSystem : ISystem
     {
 
         public string Name { get; private set; }
-        public ExplostionSystem(string name)
+        public ExplosionSystem(string name)
         {
             Name = name;
         }
@@ -22,8 +22,7 @@ namespace ExplostionSystems
 
         public void UpdateSystem()
         {
-            // processing logic here
-
+            SystemDataUtility.HandelExplodingCircles(false);
         }
     }
 }

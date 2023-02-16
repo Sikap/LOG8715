@@ -22,12 +22,7 @@ namespace destroySystem
 
         public void UpdateSystem()
         {
-            foreach (KeyValuePair<uint,DestroyComponent> shape in worldData.WorldData.toDestroy)
-            {            
-                SystemDataUtility.RemoveShapeDataFromSystems(shape.Key);
-                SystemDataUtility.DestroyShape(shape.Key);
-            }
-            worldData.WorldData.toDestroy.Clear();
+            SystemDataUtility.DestroyCircles();
         }
     }
 }

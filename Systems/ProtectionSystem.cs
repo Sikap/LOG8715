@@ -15,12 +15,6 @@ namespace protectionSystem
             Name = name;
         }
 
-        public bool IsProtectionOver (uint id) {
-            return Time.time > worldData.WorldData.circleProtectionStartTime[id].startProtectionTime + ecsManager.Config.protectionDuration;
-        }
-        public bool IsCooldownOver (uint id) {
-            return Time.time > worldData.WorldData.circleProtectionStartTime[id].startProtectionTime + ecsManager.Config.protectionCooldown;
-        }
         public void UpdateInput() 
         {
             if (Input.GetMouseButtonDown(0)){
@@ -29,29 +23,7 @@ namespace protectionSystem
         }
         public void UpdateSystem()
         {
-                    	
-            foreach (KeyValuePair<uint, PositionComponent> shape in worldData.WorldData.circlesPosition)
-            {
-                if(worldData.WorldData.circlesProtection[shape.Key].isProtected && IsProtectionOver(shape.Key)){
-                    //Debug.Log("Circle " + shape.Key + " protection end time " + Time.time);
-                    worldData.WorldData.circlesProtection[shape.Key] = new ProtectedComponent { isProtected = false };
-                }
-                if(worldData.WorldData.circlesIsDynamic[shape.Key].isDynamic &&  worldData.WorldData.circlesSize[shape.Key].size <= ecsManager.Config.protectionSize){
-                    var isProtected = SystemDataUtility.RandomProbability(ecsManager.Config.protectionProbability);
-                    if(isProtected && worldData.WorldData.circlesProtection[shape.Key].isProtected == false)
-                    {
-                        if(!worldData.WorldData.circleProtectionStartTime.ContainsKey(shape.Key)){
-                            worldData.WorldData.circlesProtection[shape.Key] = new ProtectedComponent { isProtected = true };
-                            //Debug.Log("Circle " + shape.Key + " protection start time " + Time.time);
-                            worldData.WorldData.circleProtectionStartTime.Add(shape.Key, new StartProtectionTimeComponent { startProtectionTime = Time.time });
-                        }else if(IsCooldownOver(shape.Key)){
-                            worldData.WorldData.circleProtectionStartTime.Remove(shape.Key);
-                        }
-                    }
-                }
-
-            }
-
+            SystemDataUtility.HandleCirclesProtection(false);
         }
     }
 }
