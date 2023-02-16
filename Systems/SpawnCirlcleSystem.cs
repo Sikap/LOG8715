@@ -8,15 +8,15 @@ namespace circlesSystem
     public class SpawnCirclesSystem : ISystem
     {
         global::ECSManager ecsManager = global::ECSManager.Instance;
+        bool firstSpawn = true;
         public string Name { get; private set; }
         public SpawnCirclesSystem(string name)
         {
             Name = name;
             UnityEngine.Random.InitState(1);
-            SpawnCircle(10);
         }
 
-        public void SpawnCircle(int numOfCircle)
+        public void SpawnCircle()
         {  
             Camera mainCamera = Camera.main;
             float halfCameraWidth = mainCamera.aspect * mainCamera.orthographicSize;
@@ -37,13 +37,15 @@ namespace circlesSystem
 
         public void UpdateInput() 
         {
-            if (Input.GetMouseButtonDown(0)){
-                SystemDataUtility.handleClickEvent();
-            }
         }
 
         public void UpdateSystem()
         {
+            if (firstSpawn)
+            {
+                SpawnCircle();
+                firstSpawn = false;
+            }
         }
     }
 }

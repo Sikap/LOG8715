@@ -122,20 +122,11 @@ public class SystemDataUtility
         return Vector2.Distance(clickPosition, circlePosition) < size;
     }
 
-    public static void handleClickEvent() {
-        global::ECSManager ecsManager = global::ECSManager.Instance;
-        foreach (KeyValuePair<uint, PositionComponent> shape in worldData.WorldData.circlesPosition){
-            Vector2 clickScreenPosition = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
-            Vector2 clickWorldPosition = Camera.main.ScreenToWorldPoint(clickScreenPosition);
-            var size = worldData.WorldData.circlesSize[shape.Key].size/2.0f;
-            if (worldData.WorldData.circlesIsDynamic[shape.Key].isDynamic && clickInCircle(clickWorldPosition,shape.Value.position,size)){
-                ecsManager.UpdateShapeColor(shape.Key, new Color(1.0f, 0.41f, 0.71f));
-                /*if(size>=2){
-
-                }else{
-
-                }*/
-            }
+    public static bool clickedCircleCanChangeColor(uint id) {
+        if (worldData.WorldData.circlesClicked.ContainsKey(id))
+        {
+            return true;
         }
+        return true;
     }
 }

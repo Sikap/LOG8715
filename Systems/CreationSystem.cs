@@ -16,9 +16,6 @@ namespace creationSystem
         }
         public void UpdateInput() 
         {
-            if (Input.GetMouseButtonDown(0)){
-                SystemDataUtility.handleClickEvent();
-            }
         }
 
         public void UpdateSystem()

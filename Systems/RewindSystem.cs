@@ -13,9 +13,6 @@ namespace rewindSystem
         }
         public void UpdateInput() 
         {
-            if (Input.GetMouseButtonDown(0)){
-                SystemDataUtility.handleClickEvent();
-            }
             if (Input.GetKeyDown("space")) {
                 if (Time.time - worldData.WorldData.rewindTimePressed >= 3f)
                 {

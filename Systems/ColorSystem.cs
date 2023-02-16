@@ -20,15 +20,12 @@ namespace colorSystem
         }
         public void UpdateInput() 
         {
-            if (Input.GetMouseButtonDown(0)){
-                SystemDataUtility.handleClickEvent();
-            }
         }
         public void UpdateSystem()        
         {            
             foreach (KeyValuePair<uint, PositionComponent> shape in worldData.WorldData.circlesPosition)
             {
-                if (SystemDataUtility.IsProcessable(shape.Key))
+                if (SystemDataUtility.IsProcessable(shape.Key) && SystemDataUtility.clickedCircleCanChangeColor(shape.Key))
                 {    
                     var size = worldData.WorldData.circlesSize[shape.Key].size;
                     if(!worldData.WorldData.circlesIsDynamic[shape.Key].isDynamic){

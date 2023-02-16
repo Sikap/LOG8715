@@ -26,7 +26,10 @@ namespace worldData{
         public static Dictionary<uint, SizeComponent> circlesSize = new Dictionary<uint,SizeComponent>();
         //Rewind
         public static Dictionary<float, RewindComponent> rewind = new Dictionary<float, RewindComponent>();
+        //Click event
+        public static Dictionary<uint, ClickComponent> circlesClicked = new Dictionary<uint, ClickComponent>();
         public static float rewindTimePressed = 0f;
+        public static float timeClick = 0f;
     }
 
 }
