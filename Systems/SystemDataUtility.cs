@@ -147,6 +147,7 @@ public class SystemDataUtility
         {
             return true;
         }
+        return false;
     }
 
     public static bool IsProtectionOver (uint id) {
@@ -297,7 +298,7 @@ public class SystemDataUtility
             var sizeOne = worldData.WorldData.circlesSize[shapeOne.Key].size;         
             if (!checkLeftScreen || IsCircleInLeftScreen(positionOne,sizeOne)){
 
-                if (SystemDataUtility.IsProcessable(shapeOne.Key)) {
+                if (IsProcessable(shapeOne.Key)) {
                     var shapeOnePosition = shapeOne.Value.position;
                     var shapeOneSpeed = worldData.WorldData.circlesSpeed[shapeOne.Key].speed;
                     var shapeOneSize = worldData.WorldData.circlesSize[shapeOne.Key].size;
@@ -308,7 +309,7 @@ public class SystemDataUtility
                         var positionTwo = worldData.WorldData.circlesPosition[shapeTwo.Key].position;
                         var sizeTwo = worldData.WorldData.circlesSize[shapeTwo.Key].size;         
                         if (!checkLeftScreen || IsCircleInLeftScreen(positionTwo,sizeTwo)){
-                            if (SystemDataUtility.IsProcessable(shapeTwo.Key)) {  
+                            if (IsProcessable(shapeTwo.Key)) {  
                                 if (shapeOne.Key != shapeTwo.Key) {
                                     var shapeTwoPosition = shapeTwo.Value.position;
                                     var shapeTwoSpeed = worldData.WorldData.circlesSpeed[shapeTwo.Key].speed;
@@ -407,7 +408,7 @@ public class SystemDataUtility
                     var shapeTwoIsDynamic = worldData.WorldData.circlesIsDynamic[idColliding].isDynamic;
                     var shapeOneSize = worldData.WorldData.circlesSize[idMain].size;
                     var shapeTwoSize = worldData.WorldData.circlesSize[idColliding].size;
-                    if (SystemDataUtility.IsProcessable(shape.Key) && worldData.WorldData.circlesSize.ContainsKey(shape.Key))
+                    if (IsProcessable(shape.Key) && worldData.WorldData.circlesSize.ContainsKey(shape.Key))
                     {
                         if(shapeOneIsDynamic && shapeTwoIsDynamic){
                             if (shapeOneSize > shapeTwoSize)
@@ -471,7 +472,7 @@ public class SystemDataUtility
         } else {
             if (worldData.WorldData.circlesSize.ContainsKey(id)) {
                 worldData.WorldData.circlesSize[id] = new SizeComponent { size = size };
-                SystemDataUtility.UpdateShapeSize(id, size);
+                UpdateShapeSize(id, size);
             }
         }
     }
@@ -481,7 +482,7 @@ public class SystemDataUtility
             var size = worldData.WorldData.circlesSize[shape.Key].size;   
             if (!checkLeftScreen || IsCircleInLeftScreen(shape.Value.position,size))
             {
-                if (IsProcessable(shape.Key) && SystemDataUtility.clickedCircleCanChangeColor(shape.Key))
+                if (IsProcessable(shape.Key) || clickedCircleCanChangeColor(shape.Key))
                 {    
                     if(!worldData.WorldData.circlesIsDynamic[shape.Key].isDynamic){
                         ecsManager.UpdateShapeColor(shape.Key, Color.red);
