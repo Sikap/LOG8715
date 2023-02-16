@@ -60,9 +60,6 @@ namespace rewindSystem
             }
             foreach (var rewindOld in toRemove)
             {   
-                // Debug.Log("REMOVING");
-                // Debug.Log(worldData.WorldData.rewind.Count);
-                // Debug.Log(rewindOld);
                 if (worldData.WorldData.rewind.ContainsKey(rewindOld))
                 {
                     worldData.WorldData.rewind.Remove(rewindOld);
@@ -88,25 +85,23 @@ namespace rewindSystem
         }
 
         public static void Rewind() {
-            Debug.Log("REWIND");
-            Debug.Log(SystemDataUtility.id);
             var oldestKey = FindOldest();
             RemovePresentShapes();
             if (worldData.WorldData.rewind.ContainsKey(oldestKey))
             {
                 SystemDataUtility.id = worldData.WorldData.rewind[oldestKey].id;
-                worldData.WorldData.toCreate = new Dictionary<uint, CreationComponent>(worldData.WorldData.rewind[oldestKey].toCreateComponentList);
-                worldData.WorldData.toDestroy = new Dictionary<uint, DestroyComponent>(worldData.WorldData.rewind[oldestKey].toDestroyComponentList);
-                worldData.WorldData.toExplode = new Dictionary<uint, ExplosionComponent>(worldData.WorldData.rewind[oldestKey].toExplodeComponentList);
-                worldData.WorldData.circlesProtection = new Dictionary<uint, ProtectedComponent>(worldData.WorldData.rewind[oldestKey].protectionComponentList);
-                worldData.WorldData.circleProtectionStartTime = new Dictionary<uint, StartProtectionTimeComponent>(worldData.WorldData.rewind[oldestKey].startProtectionComponentList);
-                worldData.WorldData.circlesPosition = new Dictionary<uint, PositionComponent>(worldData.WorldData.rewind[oldestKey].positionComponentList);
-                worldData.WorldData.circlesSpeed = new Dictionary<uint, SpeedComponent>(worldData.WorldData.rewind[oldestKey].speedComponentList);
-                worldData.WorldData.circlesIsDynamic = new Dictionary<uint, DynamicComponent>(worldData.WorldData.rewind[oldestKey].dynamicComponentList);
-                worldData.WorldData.circleBorderBouncePosition = new Dictionary<uint, PositionComponent>(worldData.WorldData.rewind[oldestKey].circleBorderBouncePositionList);
-                worldData.WorldData.circleBorderBounceSpeed = new Dictionary<uint, SpeedComponent>(worldData.WorldData.rewind[oldestKey].circleBorderBounceSpeedList);
-                worldData.WorldData.circlesCollision = new Dictionary<uint, CollisionComponent>(worldData.WorldData.rewind[oldestKey].collisionComponentList);
-                worldData.WorldData.circlesSize = new Dictionary<uint, SizeComponent>(worldData.WorldData.rewind[oldestKey].sizeComponentList);
+                worldData.WorldData.toCreate = worldData.WorldData.rewind[oldestKey].toCreateComponentList;
+                worldData.WorldData.toDestroy = worldData.WorldData.rewind[oldestKey].toDestroyComponentList;
+                worldData.WorldData.toExplode = worldData.WorldData.rewind[oldestKey].toExplodeComponentList;
+                worldData.WorldData.circlesProtection = worldData.WorldData.rewind[oldestKey].protectionComponentList;
+                worldData.WorldData.circleProtectionStartTime = worldData.WorldData.rewind[oldestKey].startProtectionComponentList;
+                worldData.WorldData.circlesPosition = worldData.WorldData.rewind[oldestKey].positionComponentList;
+                worldData.WorldData.circlesSpeed = worldData.WorldData.rewind[oldestKey].speedComponentList;
+                worldData.WorldData.circlesIsDynamic = worldData.WorldData.rewind[oldestKey].dynamicComponentList;
+                worldData.WorldData.circleBorderBouncePosition = worldData.WorldData.rewind[oldestKey].circleBorderBouncePositionList;
+                worldData.WorldData.circleBorderBounceSpeed = worldData.WorldData.rewind[oldestKey].circleBorderBounceSpeedList;
+                worldData.WorldData.circlesCollision = worldData.WorldData.rewind[oldestKey].collisionComponentList;
+                worldData.WorldData.circlesSize = worldData.WorldData.rewind[oldestKey].sizeComponentList;
                 worldData.WorldData.rewind.Clear();
             }
             PlaceShapes();
@@ -128,24 +123,6 @@ namespace rewindSystem
                 }
             }
             return oldest;
-        }
-
-        public static float FindNewest() {
-            bool firstIteration = true;
-            float newest = 0f;
-            foreach (KeyValuePair<float, RewindComponent> rewindInst in worldData.WorldData.rewind)
-            {
-                if (firstIteration)
-                {
-                    newest = rewindInst.Key;
-                    firstIteration = false;
-                }
-                if (newest < rewindInst.Key)
-                {
-                   newest = rewindInst.Key; 
-                }
-            }
-            return newest;
         }
     }
 }
