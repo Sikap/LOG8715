@@ -1,11 +1,17 @@
 ﻿using System.Collections.Generic;
 using circlesSystem;
-using movementSystems;
-using collisionSystems;
-using resizeSystems;
-using colorSystems;
+using movementSystem;
+using collisionSystem;
+using resizeSystem;
+using colorSystem;
 using borderSystem;
-using ProtectionSystems;
+using protectionSystem;
+using leftScreenSystem;
+using creationSystem;
+using destroySystem;
+using explosionSystem;
+using rewindSystem;
+using clickSystem;
 
 public class RegisterSystems
 {
@@ -16,12 +22,18 @@ public class RegisterSystems
 
         // Add your systems here
         toRegister.Add(new SpawnCirclesSystem("SpawnCirclesSystem"));
+        toRegister.Add(new ClickSystem("ClickSystem"));      
+        toRegister.Add(new CreationSystem("CreationSystem"));       
+        toRegister.Add(new DestroySystem("DestroySystem"));       
         toRegister.Add(new ProtectionSystem("ProtectionSystem"));
         toRegister.Add(new MovementSystem("MovementSystem"));
         toRegister.Add(new BorderSystem("BorderSystem"));
         toRegister.Add(new CollisionSystem("CollisionSystem"));
         toRegister.Add(new ResizeSystem("ResizeSystem"));
+        toRegister.Add(new ExplosionSystem("ExplosionSystem"));
         toRegister.Add(new ColorSystem("ColorSystem"));
+        toRegister.Add(new LeftScreenSystem("LeftScreenSystem"));
+        toRegister.Add(new RewindSystem("RewindSystem"));
 
         return toRegister;
     }

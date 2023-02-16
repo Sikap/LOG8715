@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public struct CreationComponent
+public struct LeftScreenComponent
 {
-    public bool toCreate;
+    public bool isLeftScreen;
 }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public struct CreationComponent
+public struct ClickComponent
 {
-    public bool toCreate;
+    public float timeColored;
 }

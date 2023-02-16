@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public struct CreationComponent
+public struct ExplosionComponent
 {
-    public bool toCreate;
+    public bool isExploding;
 }

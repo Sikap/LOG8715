@@ -2,11 +2,12 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 
-namespace colorSystems
+namespace colorSystem
 {
 
     public class ColorSystem : ISystem
     {
+        global::ECSManager ecsManager = global::ECSManager.Instance;                        
 
         public string Name { get; private set; }
         public ColorSystem(string name)
@@ -17,30 +18,34 @@ namespace colorSystems
         public bool clickInCircle(Vector2 clickPosition, Vector2 circlePosition, float size) {
             return Vector2.Distance(clickPosition, circlePosition) < size;
         }
+        public void UpdateInput() 
+        {
+        }
         public void UpdateSystem()        
         {            
-            global::ECSManager ecsManager = global::ECSManager.Instance;
             foreach (KeyValuePair<uint, PositionComponent> shape in worldData.WorldData.circlesPosition)
             {
-                if(!worldData.WorldData.circlesIsDynamic[shape.Key].isDynamic){
-                    ecsManager.UpdateShapeColor(shape.Key, Color.red);
-                } else {
-                    Vector2 clickScreenPosition = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
-                    Vector2 clickWorldPosition = Camera.main.ScreenToWorldPoint(clickScreenPosition);
+                if (SystemDataUtility.IsProcessable(shape.Key) && SystemDataUtility.clickedCircleCanChangeColor(shape.Key))
+                {    
                     var size = worldData.WorldData.circlesSize[shape.Key].size;
-                    if (Input.GetMouseButtonDown(0) && clickInCircle(clickWorldPosition,shape.Value.position,size)){
-                        ecsManager.UpdateShapeColor(shape.Key, new Color(255f/255f, 192f/255f, 203f/255f));
-                    }
-                    if (worldData.WorldData.circlesCollision[shape.Key].isCollision){
-                        ecsManager.UpdateShapeColor(shape.Key, Color.green);
+                    if(!worldData.WorldData.circlesIsDynamic[shape.Key].isDynamic){
+                        ecsManager.UpdateShapeColor(shape.Key, Color.red);
                     } else {
-                        if (size == 9){
-                            ecsManager.UpdateShapeColor(shape.Key, new Color(1.0f, 0.64f, 0.0f));
+                        if(worldData.WorldData.circlesCollision.ContainsKey(shape.Key)){
+                            ecsManager.UpdateShapeColor(shape.Key, Color.green);
                         } else {
-                            ecsManager.UpdateShapeColor(shape.Key, Color.blue);
+                            if (size == (ecsManager.Config.explosionSize - 1)){
+                                ecsManager.UpdateShapeColor(shape.Key, new Color(0xEE / 255f, 0x76 / 255f, 0x00 / 255f));
+                            } else {
+                                if(worldData.WorldData.circlesProtection[shape.Key].isProtected){
+                                    ecsManager.UpdateShapeColor(shape.Key, Color.yellow);
+                                }else{
+                                    ecsManager.UpdateShapeColor(shape.Key, Color.blue);
+                                }
+                            }
+                            
                         }
                     }
-
                 }
             }                        
         }

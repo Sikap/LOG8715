@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace DestroySystems
+namespace destroySystem
 {
 
     public class DestroySystem : ISystem
@@ -11,13 +11,21 @@ namespace DestroySystems
         public string Name { get; private set; }
         public DestroySystem(string name)
         {
+            worldData.WorldData.toDestroy.Clear();
             Name = name;
+        }
+        public void UpdateInput() 
+        {
         }
 
         public void UpdateSystem()
         {
-            // processing logic here
-
+            foreach (KeyValuePair<uint,DestroyComponent> shape in worldData.WorldData.toDestroy)
+            {            
+                SystemDataUtility.DestroyShape(shape.Key);
+                SystemDataUtility.RemoveShapeDataFromSystems(shape.Key);
+            }
+            worldData.WorldData.toDestroy.Clear();
         }
     }
 }

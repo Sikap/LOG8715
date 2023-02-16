@@ -7,8 +7,9 @@ namespace worldData{
 
     public class WorldData {
         // Spawn
-        public static List<CreationComponent> toCreate = new List<CreationComponent>();
+        public static Dictionary<uint, CreationComponent> toCreate = new Dictionary<uint, CreationComponent>();
         public static Dictionary<uint, DestroyComponent> toDestroy = new Dictionary<uint, DestroyComponent>();
+        public static Dictionary<uint, ExplosionComponent> toExplode = new Dictionary<uint, ExplosionComponent>();
         // Protection
         public static Dictionary<uint, ProtectedComponent> circlesProtection = new Dictionary<uint, ProtectedComponent>();
         public static Dictionary<uint, StartProtectionTimeComponent> circleProtectionStartTime = new Dictionary<uint, StartProtectionTimeComponent>();
@@ -20,12 +21,15 @@ namespace worldData{
         public static Dictionary<uint, PositionComponent> circleBorderBouncePosition = new Dictionary<uint, PositionComponent>();
         public static Dictionary<uint, SpeedComponent> circleBorderBounceSpeed = new Dictionary<uint, SpeedComponent>();
         //CollisionSystem 
-        public static Dictionary<uint, CollisionComponent> circlesCollision = new Dictionary<uint, CollisionComponent>();
-        public static Dictionary<uint, PositionComponent> newPositionCollision = new Dictionary<uint, PositionComponent>();
-        public static Dictionary<uint, SpeedComponent> newSpeedCollision = new Dictionary<uint, SpeedComponent>();
-        public static Dictionary<uint, SizeComponent> newSizeCollision = new Dictionary<uint, SizeComponent>();   
+        public static Dictionary<uint, CollisionComponent> circlesCollision = new Dictionary<uint, CollisionComponent>();  
         //Resize 
         public static Dictionary<uint, SizeComponent> circlesSize = new Dictionary<uint,SizeComponent>();
+        //Rewind
+        public static Dictionary<float, RewindComponent> rewind = new Dictionary<float, RewindComponent>();
+        //Click event
+        public static Dictionary<uint, ClickComponent> circlesClicked = new Dictionary<uint, ClickComponent>();
+        public static float rewindTimePressed = 0f;
+        public static float timeClick = 0f;
     }
 
 }

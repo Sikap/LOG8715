@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace movementSystems
+namespace movementSystem
 {
     public class MovementSystem : ISystem
     {
@@ -13,24 +13,25 @@ namespace movementSystems
         {
             Name = name;
         }
-
+        public void UpdateInput() 
+        {
+        }
         public void MoveObject() 
         {
-            global::ECSManager ecsManager = global::ECSManager.Instance;
             var toModify = new Dictionary<uint, PositionComponent>();
             foreach (KeyValuePair<uint,DynamicComponent> entry in worldData.WorldData.circlesIsDynamic)
-            {
-                if (!worldData.WorldData.circlesCollision.ContainsKey(entry.Key) || true)
+            {            
+                if (SystemDataUtility.IsProcessable(entry.Key))
                 {
-                    var xPosition = worldData.WorldData.circlesPosition[entry.Key].position.x + worldData.WorldData.circlesSpeed[entry.Key].speed.x;
-                    var yPosition = worldData.WorldData.circlesPosition[entry.Key].position.y + worldData.WorldData.circlesSpeed[entry.Key].speed.y;
+                    var xPosition = worldData.WorldData.circlesPosition[entry.Key].position.x + worldData.WorldData.circlesSpeed[entry.Key].speed.x * Time.deltaTime;
+                    var yPosition = worldData.WorldData.circlesPosition[entry.Key].position.y + worldData.WorldData.circlesSpeed[entry.Key].speed.y * Time.deltaTime;
                     toModify.Add(entry.Key,new PositionComponent { position = new Vector2(xPosition, yPosition)});
                 }
             }
             foreach (KeyValuePair<uint,PositionComponent> entry in toModify)
             {
                 worldData.WorldData.circlesPosition[entry.Key] = entry.Value;
-                ecsManager.UpdateShapePosition(entry.Key, entry.Value.position);
+                SystemDataUtility.UpdateShapePosition(entry.Key, entry.Value.position);
             }
         }
 
