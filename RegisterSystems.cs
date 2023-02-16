@@ -10,6 +10,7 @@ using leftScreenSystem;
 using creationSystem;
 using destroySystem;
 using explosionSystem;
+using rewindSystem;
 
 public class RegisterSystems
 {
@@ -30,6 +31,7 @@ public class RegisterSystems
         toRegister.Add(new ExplosionSystem("ExplosionSystem"));
         toRegister.Add(new ColorSystem("ColorSystem"));
         toRegister.Add(new LeftScreenSystem("LeftScreenSystem"));
+        toRegister.Add(new RewindSystem("RewindSystem"));
 
         return toRegister;
     }

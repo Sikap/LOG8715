@@ -24,9 +24,9 @@ namespace worldData{
         public static Dictionary<uint, CollisionComponent> circlesCollision = new Dictionary<uint, CollisionComponent>();  
         //Resize 
         public static Dictionary<uint, SizeComponent> circlesSize = new Dictionary<uint,SizeComponent>();
-        //4x
-        public static Dictionary<uint, LeftScreenComponent> cicrlesLeftScreen = new Dictionary<uint,LeftScreenComponent>();
-
+        //Rewind
+        public static Dictionary<float, RewindComponent> rewind = new Dictionary<float, RewindComponent>();
+        public static float rewindTimePressed = 0f;
     }
 
 }

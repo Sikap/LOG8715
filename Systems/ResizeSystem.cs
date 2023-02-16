@@ -88,6 +88,8 @@ namespace resizeSystem
                 }
             } else if (size >= ecsManager.Config.explosionSize) {
                 if (!worldData.WorldData.toDestroy.ContainsKey(id)) {
+                    Debug.Log("id");
+                    Debug.Log(id);
                     worldData.WorldData.toDestroy.Add(id, new DestroyComponent{ toDestroy = true });
                     worldData.WorldData.toExplode.Add(id, new ExplosionComponent{ isExploding = true });
                 }
