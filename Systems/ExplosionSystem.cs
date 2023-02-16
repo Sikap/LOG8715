@@ -46,6 +46,10 @@ namespace explosionSystem
                 var idTwo = SystemDataUtility.AddShapeDataToSystems(smallerCircleTwoSize, smallerCircleTwoPosition, smallerCircleTwoSpeed, true, false);
                 worldData.WorldData.toCreate.Add(idOne, new CreationComponent{ toCreate = true });
                 worldData.WorldData.toCreate.Add(idTwo, new CreationComponent{ toCreate = true });
+                if (!worldData.WorldData.toDestroy.ContainsKey(shape.Key))
+                {
+                    worldData.WorldData.toDestroy.Add(shape.Key, new DestroyComponent{ toDestroy = true });
+                }
             }
             worldData.WorldData.toExplode.Clear();
         }
