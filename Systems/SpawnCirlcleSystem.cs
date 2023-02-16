@@ -13,7 +13,7 @@ namespace circlesSystem
         public SpawnCirclesSystem(string name)
         {
             Name = name;
-            UnityEngine.Random.InitState(1);
+            UnityEngine.Random.InitState(ecsManager.Config.seed);
         }
 
         public void SpawnCircle()

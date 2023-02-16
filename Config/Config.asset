@@ -62,4 +62,7 @@ MonoBehaviour:
     - LeftScreenSystem
     - CreationSystem
     - DestroySystem
-    values: 0101010101010101010101
+    - ClickSystem
+    - ExplosionSystem
+    - RewindSystem
+    values: 0101010101010101010101010101
