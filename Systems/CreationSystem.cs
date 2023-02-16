@@ -20,11 +20,7 @@ namespace creationSystem
 
         public void UpdateSystem()
         {
-            foreach (KeyValuePair<uint, CreationComponent> shape in worldData.WorldData.toCreate)
-            {
-                SystemDataUtility.CreateCircle(shape.Key);
-            }
-            worldData.WorldData.toCreate.Clear();
+           SystemDataUtility.CreateCircles();
         }
     }
 }

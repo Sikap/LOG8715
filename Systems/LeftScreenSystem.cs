@@ -7,10 +7,13 @@ namespace leftScreenSystem
 
     public class LeftScreenSystem : ISystem
     {
+        global::ECSManager ecsManager = global::ECSManager.Instance;
+        public static Camera mainCamera;
 
         public string Name { get; private set; }
         public LeftScreenSystem(string name)
         {
+            mainCamera = Camera.main;
             Name = name;
         }
         public void UpdateInput() 
@@ -18,9 +21,18 @@ namespace leftScreenSystem
         }
 
         public void UpdateSystem()
-        {
-            // DO NOT FORGET TO CHECK IF CIRCLE IS PROCESSABLE SystemDataUtility.IsProcessable(id)
-
+        {   
+            for(int i = 0; i<3; i++){
+                SystemDataUtility.CreateCircles();
+                SystemDataUtility.DestroyCircles();
+                SystemDataUtility.HandleCirclesProtection(true);
+                SystemDataUtility.MoveCircles(true);
+                SystemDataUtility.HandelCameraScreenBounds(true);
+                SystemDataUtility.HandelCirclesCollision(true);
+                SystemDataUtility.ResizeCircles(true);
+                SystemDataUtility.HandelExplodingCircles(true);
+                SystemDataUtility.ColorCircles(true);
+            }
         }
     }
 }
