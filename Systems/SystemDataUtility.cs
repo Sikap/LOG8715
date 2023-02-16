@@ -158,7 +158,7 @@ public class SystemDataUtility
         return Time.time > worldData.WorldData.circleProtectionStartTime[id].startProtectionTime + ecsManager.Config.protectionDuration;
     }
     public static bool IsCooldownOver (uint id) {
-        return Time.time > worldData.WorldData.circleProtectionStartTime[id].startProtectionTime + ecsManager.Config.protectionCooldown;
+        return Time.time > worldData.WorldData.circleProtectionStartTime[id].startProtectionTime + ecsManager.Config.protectionDuration + ecsManager.Config.protectionCooldown;
     } 
     public static void HandleCirclesProtection(bool checkLeftScreen) {
         foreach (KeyValuePair<uint, PositionComponent> shape in worldData.WorldData.circlesPosition)
