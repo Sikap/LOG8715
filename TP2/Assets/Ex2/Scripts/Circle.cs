@@ -15,11 +15,14 @@ public class Circle : MonoBehaviour
 
     private const float HealingPerSecond = 1;
     private const float HealingRange = 3;
+    private Grid grid;
+    private float timer;
 
     // Start is called before the first frame update
     private void Start()
     {
         Health = BaseHealth;
+        grid = FindObjectOfType<Grid>();
     }
 
     // Update is called once per frame
@@ -31,20 +34,24 @@ public class Circle : MonoBehaviour
 
     private void UpdateColor()
     {
-        var grid = GameObject.FindObjectOfType<Grid>();
         var spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         spriteRenderer.color = grid.Colors[i, j] * Health / BaseHealth;
     }
 
     private void HealNearbyShapes()
     {
-        var nearbyColliders = Physics2D.OverlapCircleAll(transform.position, HealingRange);
-        foreach (var nearbyCollider in nearbyColliders)
+        timer += Time.deltaTime;
+        while(timer >= 1 / HealingPerSecond)
         {
-            if (nearbyCollider != null && nearbyCollider.TryGetComponent<Circle>(out var circle))
+            var nearbyColliders = Physics2D.OverlapCircleAll(transform.position, HealingRange);
+            foreach (var nearbyCollider in nearbyColliders)
             {
-                circle.ReceiveHp(HealingPerSecond * Time.deltaTime);
-            }
+                if (nearbyCollider != null && nearbyCollider.TryGetComponent<Circle>(out var circle))
+                {
+                    circle.ReceiveHp(1);
+                }
+            }                
+            timer -= 1 / HealingPerSecond;
         }
     }
 
