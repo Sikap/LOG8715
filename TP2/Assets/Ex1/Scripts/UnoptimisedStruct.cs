@@ -1,20 +1,20 @@
 using UnityEngine;
 public struct UnoptimisedStruct1
-{
+{        
+    public UnoptimizedStruct2[] otherFriends;
+    public UnoptimizedStruct2 mainFriend;    
+    public Vector3 position;    
+    public double range;    
+    public float[] distancesFromObjectives;    
     public float velocity;
-    public bool canJump;
+    public float size;
     public int baseHP;
     public int nbAllies;
-    public Vector3 position;
     public int currentHp;
-    public float[] distancesFromObjectives;
-    public byte colorAlpha;
-    public double range;
-    public UnoptimizedStruct2 mainFriend;
     public bool isVisible;
-    public UnoptimizedStruct2[] otherFriends;
-    public bool isStanding;
-    public float size;
+    public bool isStanding;   
+    public bool canJump;
+    public byte colorAlpha;
     
     public UnoptimisedStruct1(float velocity, bool canJump, int baseHP, int nbAllies, Vector3 position, int currentHp, float[] distancesFromObjectives, byte colorAlpha, double range, UnoptimizedStruct2 mainFriend, bool isVisible, UnoptimizedStruct2[] otherFriends, bool isStanding, float size)
     {
@@ -45,18 +45,18 @@ public enum FriendState
 }
 
 public struct UnoptimizedStruct2 
-{
-    public bool isAlive;
-    public float height;
-    public FriendState currentState;
-    public float velocity;
-    public int currentObjective;
-    public double maxSight;
-    public bool canJump;
-    public float acceleration;
-    public Vector3 position;
-    public float maxVelocity;
-    
+{       
+    public Vector3 position;    
+    public FriendState currentState;  
+    public double maxSight;    
+    public float height;    
+    public float velocity;    
+    public float acceleration;    
+    public float maxVelocity; 
+    public int currentObjective;     
+    public bool isAlive;     
+    public bool canJump;    
+
     public UnoptimizedStruct2(bool isAlive, float height, FriendState currentState, float velocity, int currentObjective, double maxSight, bool canJump, float acceleration, Vector3 position, float maxVelocity)
     {
         this.isAlive = isAlive;
