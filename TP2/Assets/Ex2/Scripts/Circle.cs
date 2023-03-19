@@ -39,7 +39,7 @@ public class Circle : MonoBehaviour
         spriteRenderer.color = grid.Colors[i, j] * Health / BaseHealth;
     }
 
-    private void HealNearbyShapes()
+    /*private void HealNearbyShapes()
     {
         timer += Time.deltaTime;
         while(timer >= 1 / HealingPerSecond)
@@ -52,6 +52,24 @@ public class Circle : MonoBehaviour
                     circle.ReceiveHp(1);
                 }
             }                
+            timer -= 1 / HealingPerSecond;
+        }
+    }*/
+    private void HealNearbyShapes()
+    {
+        timer += Time.deltaTime;
+        while(timer >= 1 / HealingPerSecond)
+        {
+            Collider2D[] nearbyColliders = new Collider2D[16];
+            int numColliders = Physics2D.OverlapCircleNonAlloc(transform.position, HealingRange, nearbyColliders);
+    
+            for (int i = 0; i < numColliders; i++)
+            {
+                if (nearbyColliders[i].TryGetComponent<Circle>(out var circle))
+                {
+                    circle.ReceiveHp(1);
+                }
+            }               
             timer -= 1 / HealingPerSecond;
         }
     }
