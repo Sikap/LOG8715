@@ -1,4 +1,4 @@
-﻿#define BAD_PERF // TODO CHANGEZ MOI. Mettre en commentaire pour utiliser votre propre structure
+﻿// #define BAD_PERF // TODO CHANGEZ MOI. Mettre en commentaire pour utiliser votre propre structure
 
 using System;
 using UnityEngine;
@@ -7,8 +7,8 @@ using UnityEngine;
 using InnerType = System.Collections.Generic.Dictionary<uint, IComponent>;
 using AllComponents = System.Collections.Generic.Dictionary<uint, System.Collections.Generic.Dictionary<uint, IComponent>>;
 #else
-using InnerType = ...; // TODO CHANGEZ MOI, UTILISEZ VOTRE PROPRE TYPE ICI
-using AllComponents = ...; // TODO CHANGEZ MOI, UTILISEZ VOTRE PROPRE TYPE ICI
+using InnerType = ArrayPool<IComponent>;
+using AllComponents = System.Collections.Generic.Dictionary<uint, ArrayPool<IComponent>>;
 #endif
 
 // Appeler GetHashCode sur un Type est couteux. Cette classe sert a precalculer le hashcode
@@ -36,6 +36,41 @@ public class Singleton<V> where V : new()
     protected Singleton() { }
 }
 
+public class ArrayPool<T> where T: IComponent
+{
+    public T[] Values;
+    public bool[] ValuesAssigned;
+
+    public ArrayPool() {
+        Values = new T[ECSManager.Instance.Config.numberOfShapesToSpawn];
+        ValuesAssigned = new bool[ECSManager.Instance.Config.numberOfShapesToSpawn];
+    }
+
+    public T this[EntityComponent entity]
+    {
+        get {
+            return Values[entity.id];
+        }
+        set {
+            ValuesAssigned[entity.id] = true;
+            Values[entity.id] = value;
+        }
+    }
+
+    public bool ContainsKey(EntityComponent entity) {
+        return ValuesAssigned[entity.id];
+    }
+
+    public void Clear() {
+        Array.Clear(ValuesAssigned, 0, ValuesAssigned.Length);
+    }
+
+    public bool Remove(EntityComponent entity) {
+        ValuesAssigned[entity.id] = false;
+        return true;
+    }
+}
+
 internal class ComponentsManager : Singleton<ComponentsManager>
 {
     private AllComponents _allComponents = new AllComponents();
@@ -50,7 +85,7 @@ internal class ComponentsManager : Singleton<ComponentsManager>
         {
             toPrint += $"{type}: \n";
 #if !BAD_PERF
-            foreach (var component in type)
+            foreach (var component in type.Value.Values)
 #else
             foreach (var component in type.Value)
 #endif
@@ -65,6 +100,7 @@ internal class ComponentsManager : Singleton<ComponentsManager>
         }
         Debug.Log(toPrint);
     }
+
 
     // CRUD
     public void SetComponent<T>(EntityComponent entityID, IComponent component) where T : IComponent
@@ -174,7 +210,6 @@ internal class ComponentsManager : Singleton<ComponentsManager>
             lambda(entity, (T1)_allComponents[TypeRegistry<T1>.typeID][entity], (T2)_allComponents[TypeRegistry<T2>.typeID][entity], (T3)_allComponents[TypeRegistry<T3>.typeID][entity], (T4)_allComponents[TypeRegistry<T4>.typeID][entity]);
         }
     }
-
     public AllComponents DebugGetAllComponents()
     {
         return _allComponents;
