@@ -1849,3 +1849,8 @@ UnloadTime: 0.806800 ms
 Unloading 1 unused Assets to reduce memory usage. Loaded Objects now: 1738.
 Total: 0.741100 ms (FindLiveObjects: 0.097600 ms CreateObjectMapping: 0.041900 ms MarkObjects: 0.595700 ms  DeleteObjects: 0.005800 ms)
 
+ FPS: 70
+ FPS: 24
+ FPS: 36
+ FPS: 36
+ FPS: 36
