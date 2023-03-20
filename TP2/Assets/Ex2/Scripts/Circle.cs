@@ -61,7 +61,7 @@ public class Circle : MonoBehaviour
     {
         for (int i = 0; i < numCircles; i++)
         {
-            nearbyCircles[i].ReceiveHp( HealingPerSecond*Time.deltaTime);
+            nearbyCircles[i].ReceiveHp(HealingPerSecond*Time.deltaTime);
         }
             
     }
