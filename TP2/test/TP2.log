@@ -13,464 +13,61 @@ Begin MonoManager ReloadAssembly
 ERROR: Shader Sprites/Default shader is not supported on this GPU (none of subshaders/fallbacks are suitable)
 Microsoft Media Foundation video decoding to texture disabled: graphics device is Null, only Direct3D 11 and Direct3D 12 (only on desktop) are supported for hardware-accelerated video decoding.
 ERROR: Shader Sprites/Mask shader is not supported on this GPU (none of subshaders/fallbacks are suitable)
-UnloadTime: 0.562700 ms
+UnloadTime: 0.563900 ms
 Chargement de la scene: Ex2
 Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 0.156700 ms
-Unloading 3 unused Assets to reduce memory usage. Loaded Objects now: 1703.
-Total: 0.644700 ms (FindLiveObjects: 0.131700 ms CreateObjectMapping: 0.039300 ms MarkObjects: 0.467300 ms  DeleteObjects: 0.006100 ms)
+UnloadTime: 0.162900 ms
+Unloading 3 unused Assets to reduce memory usage. Loaded Objects now: 1704.
+Total: 0.677600 ms (FindLiveObjects: 0.064900 ms CreateObjectMapping: 0.038000 ms MarkObjects: 0.556000 ms  DeleteObjects: 0.018500 ms)
 
- FPS: 30303
- FPS: 62
+ FPS: 27247
+ FPS: 64
+ FPS: 60
  FPS: 63
  FPS: 65
- FPS: 63
- FPS: 63
- FPS: 62
+ FPS: 65
  FPS: 66
+ FPS: 67
+ FPS: 67
+ FPS: 65
+ FPS: 65
+ FPS: 65
+ FPS: 65
  FPS: 65
  FPS: 64
- FPS: 63
- FPS: 62
- FPS: 64
- FPS: 64
- FPS: 66
 Chargement de la scene: Ex3
 Unloading 3 Unused Serialized files (Serialized files now loaded: 0)
 ERROR: Shader UI/Default shader is not supported on this GPU (none of subshaders/fallbacks are suitable)
 ERROR: Shader GUI/Text Shader shader is not supported on this GPU (none of subshaders/fallbacks are suitable)
-UnloadTime: 110.613300 ms
-Unloading 11 unused Assets to reduce memory usage. Loaded Objects now: 1703.
-Total: 0.736400 ms (FindLiveObjects: 0.068200 ms CreateObjectMapping: 0.039300 ms MarkObjects: 0.605300 ms  DeleteObjects: 0.023500 ms)
+UnloadTime: 114.684500 ms
+Unloading 11 unused Assets to reduce memory usage. Loaded Objects now: 1704.
+Total: 0.678600 ms (FindLiveObjects: 0.069800 ms CreateObjectMapping: 0.040400 ms MarkObjects: 0.543800 ms  DeleteObjects: 0.024500 ms)
 
- FPS: 64
- FPS: 20
+ FPS: 61
  FPS: 23
- FPS: 22
- FPS: 24
- FPS: 24
- FPS: 23
- FPS: 23
- FPS: 24
- FPS: 24
- FPS: 24
- FPS: 21
+ FPS: 27
+ FPS: 26
  FPS: 25
- FPS: 22
+ FPS: 25
  FPS: 24
+ FPS: 25
+ FPS: 26
+ FPS: 26
+ FPS: 27
+ FPS: 27
+ FPS: 24
+ FPS: 24
+ FPS: 26
 Chargement de la scene: Ex4
 Unloading 3 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 4.594600 ms
-Unloading 4 unused Assets to reduce memory usage. Loaded Objects now: 3709.
-Total: 0.886300 ms (FindLiveObjects: 0.140100 ms CreateObjectMapping: 0.057500 ms MarkObjects: 0.669400 ms  DeleteObjects: 0.019300 ms)
+UnloadTime: 4.463800 ms
+Unloading 4 unused Assets to reduce memory usage. Loaded Objects now: 58210.
+Total: 8.291000 ms (FindLiveObjects: 2.857200 ms CreateObjectMapping: 0.682500 ms MarkObjects: 4.685600 ms  DeleteObjects: 0.065500 ms)
 
- FPS: 59
- FPS: 72
- FPS: 75
- FPS: 73
- FPS: 69
- FPS: 72
- FPS: 73
- FPS: 69
- FPS: 70
- FPS: 73
- FPS: 71
- FPS: 71
- FPS: 71
- FPS: 72
- FPS: 72
-Chargement de la scene: Ex2
-Unloading 3 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 0.813300 ms
-Unloading 1 unused Assets to reduce memory usage. Loaded Objects now: 1738.
-Total: 0.778900 ms (FindLiveObjects: 0.085800 ms CreateObjectMapping: 0.037000 ms MarkObjects: 0.649700 ms  DeleteObjects: 0.006300 ms)
-
- FPS: 71
- FPS: 62
- FPS: 62
- FPS: 62
- FPS: 64
- FPS: 63
- FPS: 62
- FPS: 64
- FPS: 63
- FPS: 63
- FPS: 62
- FPS: 62
- FPS: 62
- FPS: 63
- FPS: 64
-Chargement de la scene: Ex3
-Unloading 3 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 21.521600 ms
-Unloading 11 unused Assets to reduce memory usage. Loaded Objects now: 1730.
-Total: 0.766100 ms (FindLiveObjects: 0.070600 ms CreateObjectMapping: 0.040300 ms MarkObjects: 0.623000 ms  DeleteObjects: 0.032000 ms)
-
- FPS: 60
- FPS: 23
- FPS: 23
- FPS: 23
- FPS: 23
- FPS: 23
- FPS: 23
- FPS: 24
- FPS: 24
- FPS: 22
- FPS: 23
- FPS: 22
- FPS: 23
- FPS: 21
- FPS: 22
-Chargement de la scene: Ex4
-Unloading 3 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 0.191600 ms
-Unloading 4 unused Assets to reduce memory usage. Loaded Objects now: 1709.
-Total: 0.774300 ms (FindLiveObjects: 0.089700 ms CreateObjectMapping: 0.034600 ms MarkObjects: 0.640700 ms  DeleteObjects: 0.009300 ms)
-
- FPS: 62
- FPS: 75
- FPS: 77
- FPS: 71
- FPS: 72
- FPS: 73
- FPS: 71
- FPS: 69
- FPS: 67
- FPS: 72
- FPS: 71
- FPS: 72
- FPS: 73
- FPS: 70
- FPS: 72
-Chargement de la scene: Ex2
-Unloading 3 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 0.803100 ms
-Unloading 1 unused Assets to reduce memory usage. Loaded Objects now: 1738.
-Total: 0.789300 ms (FindLiveObjects: 0.062000 ms CreateObjectMapping: 0.035300 ms MarkObjects: 0.686300 ms  DeleteObjects: 0.005600 ms)
-
- FPS: 73
- FPS: 60
- FPS: 56
- FPS: 60
- FPS: 60
- FPS: 61
- FPS: 58
- FPS: 64
- FPS: 61
- FPS: 62
- FPS: 62
- FPS: 62
- FPS: 58
- FPS: 63
- FPS: 60
-Chargement de la scene: Ex3
-Unloading 3 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 21.170800 ms
-Unloading 11 unused Assets to reduce memory usage. Loaded Objects now: 1730.
-Total: 0.798600 ms (FindLiveObjects: 0.070500 ms CreateObjectMapping: 0.039400 ms MarkObjects: 0.657700 ms  DeleteObjects: 0.030900 ms)
-
- FPS: 62
- FPS: 23
- FPS: 22
- FPS: 22
- FPS: 23
- FPS: 23
- FPS: 23
- FPS: 22
- FPS: 23
- FPS: 23
- FPS: 24
- FPS: 23
- FPS: 22
- FPS: 21
- FPS: 22
-Chargement de la scene: Ex4
-Unloading 3 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 0.195000 ms
-Unloading 4 unused Assets to reduce memory usage. Loaded Objects now: 1709.
-Total: 0.696900 ms (FindLiveObjects: 0.066900 ms CreateObjectMapping: 0.033900 ms MarkObjects: 0.585700 ms  DeleteObjects: 0.010300 ms)
-
- FPS: 60
- FPS: 73
- FPS: 77
- FPS: 75
- FPS: 70
- FPS: 72
- FPS: 74
- FPS: 74
- FPS: 72
- FPS: 71
- FPS: 73
- FPS: 70
- FPS: 72
- FPS: 71
- FPS: 74
-Chargement de la scene: Ex2
-Unloading 3 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 0.870100 ms
-Unloading 1 unused Assets to reduce memory usage. Loaded Objects now: 1738.
-Total: 0.671800 ms (FindLiveObjects: 0.063500 ms CreateObjectMapping: 0.031400 ms MarkObjects: 0.571000 ms  DeleteObjects: 0.005800 ms)
-
- FPS: 69
- FPS: 62
- FPS: 62
- FPS: 61
- FPS: 60
- FPS: 60
- FPS: 63
- FPS: 65
- FPS: 63
- FPS: 64
- FPS: 63
- FPS: 62
- FPS: 59
- FPS: 63
- FPS: 63
-Chargement de la scene: Ex3
-Unloading 3 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 20.659100 ms
-Unloading 11 unused Assets to reduce memory usage. Loaded Objects now: 1730.
-Total: 0.729100 ms (FindLiveObjects: 0.070600 ms CreateObjectMapping: 0.043300 ms MarkObjects: 0.582700 ms  DeleteObjects: 0.032500 ms)
-
- FPS: 59
- FPS: 23
- FPS: 21
- FPS: 21
- FPS: 23
- FPS: 23
- FPS: 23
- FPS: 21
- FPS: 22
- FPS: 24
-Setting up 3 worker threads for Enlighten.
-Memory Statistics:
-[ALLOC_TEMP_TLS] TLS Allocator
-  StackAllocators : 
-    [ALLOC_TEMP_MAIN]
-      Peak usage frame count: [0-1.0 KB]: 2528 frames, [4.0 KB-8.0 KB]: 13970 frames, [64.0 KB-128.0 KB]: 5 frames, [128.0 KB-256.0 KB]: 10 frames, [256.0 KB-0.5 MB]: 1 frames, [2.0 MB-4.0 MB]: 1 frames
-      Initial Block Size 4.0 MB
-      Current Block Size 4.0 MB
-      Peak Allocated Bytes 2.1 MB
-      Overflow Count 0
-    [ALLOC_TEMP_Loading.AsyncRead]
-      Initial Block Size 64.0 KB
-      Current Block Size 64.0 KB
-      Peak Allocated Bytes 252 B
-      Overflow Count 0
-    [ALLOC_TEMP_Loading.PreloadManager]
-      Initial Block Size 256.0 KB
-      Current Block Size 256.0 KB
-      Peak Allocated Bytes 14.0 KB
-      Overflow Count 48
-    [ALLOC_TEMP_Background Job.Worker 8]
-      Initial Block Size 32.0 KB
-      Current Block Size 32.0 KB
-      Peak Allocated Bytes 54 B
-      Overflow Count 0
-    [ALLOC_TEMP_Background Job.Worker 9]
-      Initial Block Size 32.0 KB
-      Current Block Size 32.0 KB
-      Peak Allocated Bytes 54 B
-      Overflow Count 0
-    [ALLOC_TEMP_Job.Worker 0]
-      Initial Block Size 256.0 KB
-      Current Block Size 256.0 KB
-      Peak Allocated Bytes 0 B
-      Overflow Count 0
-    [ALLOC_TEMP_Background Job.Worker 10]
-      Initial Block Size 32.0 KB
-      Current Block Size 32.0 KB
-      Peak Allocated Bytes 54 B
-      Overflow Count 0
-    [ALLOC_TEMP_Background Job.Worker 14]
-      Initial Block Size 32.0 KB
-      Current Block Size 32.0 KB
-      Peak Allocated Bytes 54 B
-      Overflow Count 0
-    [ALLOC_TEMP_Background Job.Worker 6]
-      Initial Block Size 32.0 KB
-      Current Block Size 32.0 KB
-      Peak Allocated Bytes 54 B
-      Overflow Count 0
-    [ALLOC_TEMP_Job.Worker 4]
-      Initial Block Size 256.0 KB
-      Current Block Size 256.0 KB
-      Peak Allocated Bytes 0 B
-      Overflow Count 0
-    [ALLOC_TEMP_Job.Worker 3]
-      Initial Block Size 256.0 KB
-      Current Block Size 256.0 KB
-      Peak Allocated Bytes 0 B
-      Overflow Count 0
-    [ALLOC_TEMP_Background Job.Worker 12]
-      Initial Block Size 32.0 KB
-      Current Block Size 32.0 KB
-      Peak Allocated Bytes 54 B
-      Overflow Count 0
-    [ALLOC_TEMP_EnlightenWorker] x 3
-      Initial Block Size 64.0 KB
-      Current Block Size 64.0 KB
-      Peak Allocated Bytes 54 B
-      Overflow Count 0
-    [ALLOC_TEMP_Background Job.Worker 15]
-      Initial Block Size 32.0 KB
-      Current Block Size 32.0 KB
-      Peak Allocated Bytes 54 B
-      Overflow Count 0
-    [ALLOC_TEMP_Background Job.Worker 1]
-      Initial Block Size 32.0 KB
-      Current Block Size 32.0 KB
-      Peak Allocated Bytes 54 B
-      Overflow Count 0
-    [ALLOC_TEMP_Background Job.Worker 2]
-      Initial Block Size 32.0 KB
-      Current Block Size 32.0 KB
-      Peak Allocated Bytes 54 B
-      Overflow Count 0
-    [ALLOC_TEMP_Background Job.Worker 7]
-      Initial Block Size 32.0 KB
-      Current Block Size 32.0 KB
-      Peak Allocated Bytes 54 B
-      Overflow Count 0
-    [ALLOC_TEMP_AssetGarbageCollectorHelper] x 5
-      Initial Block Size 64.0 KB
-      Current Block Size 64.0 KB
-      Peak Allocated Bytes 0 B
-      Overflow Count 0
-    [ALLOC_TEMP_Background Job.Worker 5]
-      Initial Block Size 32.0 KB
-      Current Block Size 32.0 KB
-      Peak Allocated Bytes 54 B
-      Overflow Count 0
-    [ALLOC_TEMP_Background Job.Worker 13]
-      Initial Block Size 32.0 KB
-      Current Block Size 32.0 KB
-      Peak Allocated Bytes 54 B
-      Overflow Count 0
-    [ALLOC_TEMP_Job.Worker 1]
-      Initial Block Size 256.0 KB
-      Current Block Size 256.0 KB
-      Peak Allocated Bytes 0 B
-      Overflow Count 0
-    [ALLOC_TEMP_Job.Worker 2]
-      Initial Block Size 256.0 KB
-      Current Block Size 256.0 KB
-      Peak Allocated Bytes 0 B
-      Overflow Count 0
-    [ALLOC_TEMP_Background Job.Worker 3]
-      Initial Block Size 32.0 KB
-      Current Block Size 32.0 KB
-      Peak Allocated Bytes 54 B
-      Overflow Count 0
-    [ALLOC_TEMP_Background Job.Worker 11]
-      Initial Block Size 32.0 KB
-      Current Block Size 32.0 KB
-      Peak Allocated Bytes 54 B
-      Overflow Count 0
-    [ALLOC_TEMP_Background Job.Worker 0]
-      Initial Block Size 32.0 KB
-      Current Block Size 32.0 KB
-      Peak Allocated Bytes 54 B
-      Overflow Count 0
-    [ALLOC_TEMP_Background Job.Worker 4]
-      Initial Block Size 32.0 KB
-      Current Block Size 32.0 KB
-      Peak Allocated Bytes 54 B
-      Overflow Count 0
-    [ALLOC_TEMP_BatchDeleteObjects]
-      Initial Block Size 64.0 KB
-      Current Block Size 64.0 KB
-      Peak Allocated Bytes 54 B
-      Overflow Count 0
-[ALLOC_DEFAULT] Dual Thread Allocator
-  Peak main deferred allocation count 26392
-    [ALLOC_BUCKET]
-      Large Block size 4.0 MB
-      Used Block count 1
-      Peak Allocated bytes 3.8 MB
-    [ALLOC_DEFAULT_MAIN]
-      Peak usage frame count: [4.0 MB-8.0 MB]: 8984 frames, [16.0 MB-32.0 MB]: 7531 frames
-      Requested Block Size 16.0 MB
-      Peak Block count 3
-      Peak Allocated memory 29.7 MB
-      Peak Large allocation bytes 0 B
-    [ALLOC_DEFAULT_THREAD]
-      Peak usage frame count: [16.0 MB-32.0 MB]: 16515 frames
-      Requested Block Size 16.0 MB
-      Peak Block count 1
-      Peak Allocated memory 17.0 MB
-      Peak Large allocation bytes 16.0 MB
-[ALLOC_TEMP_JOB_1_FRAME]
-  Initial Block Size 2.0 MB
-  Used Block Count 1
-  Overflow Count (too large) 0
-  Overflow Count (full) 0
-[ALLOC_TEMP_JOB_2_FRAMES]
-  Initial Block Size 2.0 MB
-  Used Block Count 1
-  Overflow Count (too large) 0
-  Overflow Count (full) 0
-[ALLOC_TEMP_JOB_4_FRAMES (JobTemp)]
-  Initial Block Size 2.0 MB
-  Used Block Count 2
-  Overflow Count (too large) 0
-  Overflow Count (full) 0
-[ALLOC_TEMP_JOB_ASYNC (Background)]
-  Initial Block Size 1.0 MB
-  Used Block Count 3
-  Overflow Count (too large) 0
-  Overflow Count (full) 0
-[ALLOC_GFX] Dual Thread Allocator
-  Peak main deferred allocation count 0
-    [ALLOC_BUCKET]
-      Large Block size 4.0 MB
-      Used Block count 1
-      Peak Allocated bytes 3.8 MB
-    [ALLOC_GFX_MAIN]
-      Peak usage frame count: [32.0 KB-64.0 KB]: 16513 frames, [64.0 KB-128.0 KB]: 2 frames
-      Requested Block Size 16.0 MB
-      Peak Block count 1
-      Peak Allocated memory 108.1 KB
-      Peak Large allocation bytes 0 B
-    [ALLOC_GFX_THREAD]
-      Peak usage frame count: [0-1.0 KB]: 691 frames, [1.0 KB-2.0 KB]: 15824 frames
-      Requested Block Size 16.0 MB
-      Peak Block count 1
-      Peak Allocated memory 1.9 KB
-      Peak Large allocation bytes 0 B
-[ALLOC_CACHEOBJECTS] Dual Thread Allocator
-  Peak main deferred allocation count 22
-    [ALLOC_BUCKET]
-      Large Block size 4.0 MB
-      Used Block count 1
-      Peak Allocated bytes 3.8 MB
-    [ALLOC_CACHEOBJECTS_MAIN]
-      Peak usage frame count: [0.5 MB-1.0 MB]: 13977 frames, [1.0 MB-2.0 MB]: 2538 frames
-      Requested Block Size 4.0 MB
-      Peak Block count 1
-      Peak Allocated memory 1.5 MB
-      Peak Large allocation bytes 0 B
-    [ALLOC_CACHEOBJECTS_THREAD]
-      Peak usage frame count: [32.0 KB-64.0 KB]: 14651 frames, [64.0 KB-128.0 KB]: 1854 frames, [128.0 KB-256.0 KB]: 10 frames
-      Requested Block Size 4.0 MB
-      Peak Block count 1
-      Peak Allocated memory 206.8 KB
-      Peak Large allocation bytes 0 B
-[ALLOC_TYPETREE] Dual Thread Allocator
-  Peak main deferred allocation count 0
-    [ALLOC_BUCKET]
-      Large Block size 4.0 MB
-      Used Block count 1
-      Peak Allocated bytes 3.8 MB
-    [ALLOC_TYPETREE_MAIN]
-      Peak usage frame count: [0-1.0 KB]: 16515 frames
-      Requested Block Size 2.0 MB
-      Peak Block count 1
-      Peak Allocated memory 1.0 KB
-      Peak Large allocation bytes 0 B
-    [ALLOC_TYPETREE_THREAD]
-      Peak usage frame count: [0-1.0 KB]: 1926 frames, [1.0 KB-2.0 KB]: 14589 frames
-      Requested Block Size 2.0 MB
-      Peak Block count 1
-      Peak Allocated memory 1.7 KB
-      Peak Large allocation bytes 0 B
+ FPS: 26
+ FPS: 28
+ FPS: 2
+ FPS: 2
+ FPS: 2
+ FPS: 2
+ FPS: 2
