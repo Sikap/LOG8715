@@ -19,7 +19,6 @@ public class Circle : MonoBehaviour
     
     private Grid grid;
     private SpriteRenderer spriteRenderer;
-    private float timer;
     private List<Circle> nearbyCircles = new List<Circle>();
     private int numCircles; 
    
@@ -60,16 +59,10 @@ public class Circle : MonoBehaviour
 
     private void HealNearbyShapes()
     {
-        timer += Time.deltaTime;
-        while(timer >= 1 / HealingPerSecond)
-        {    
-            for (int i = 0; i < numCircles; i++)
-            {
-                nearbyCircles[i].ReceiveHp(1);
-            }               
-            timer -= 1 / HealingPerSecond;
-        }
-        
+        for (int i = 0; i < numCircles; i++)
+        {
+            nearbyCircles[i].ReceiveHp(1);
+        }                  
     }
 
     public void ReceiveHp(float hpReceived)
