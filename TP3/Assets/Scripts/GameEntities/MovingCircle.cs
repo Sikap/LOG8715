@@ -11,6 +11,7 @@ public class MovingCircle : NetworkBehaviour
     public Vector2 Position => m_Position.Value;
 
     public Vector2 Velocity => m_Velocity.Value;
+    public float Radius => m_Radius;
 
     public Vector2 InitialPosition;
     public Vector2 InitialVelocity;

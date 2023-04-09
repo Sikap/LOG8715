@@ -16,6 +16,8 @@ public class CircleSpawner : NetworkBehaviour
 
     [SerializeField]
     private GameObject m_CirclePrefab;
+    
+    public int NbCircles { get => m_NbCircles; }
 
     public override void OnNetworkSpawn()
     {
@@ -31,5 +33,5 @@ public class CircleSpawner : NetworkBehaviour
                 circleNetworkObject.Spawn();
             }
         }
-    } 
+    }
 }
