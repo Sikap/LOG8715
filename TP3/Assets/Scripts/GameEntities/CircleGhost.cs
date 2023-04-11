@@ -45,6 +45,12 @@ public class CircleGhost : NetworkBehaviour
 
     private void FixedUpdate()
     { 
+        // Si le stun est active, rien n'est mis a jour.
+        if (m_GameState.IsStunned)
+        {
+            return;
+        }
+
         if(IsClient)   
         {       
             //Prediction local + sauvgarde de la prediction.           

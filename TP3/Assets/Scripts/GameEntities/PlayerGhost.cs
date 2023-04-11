@@ -21,6 +21,14 @@ public class PlayerGhost : NetworkBehaviour
 
     private void Update()
     {
-        transform.position = m_Player.Position;
+        if(IsServer)
+        {
+            transform.position = m_Player.Position;
+        }
+        if(IsClient)
+        {
+            transform.position = m_Player.localPosition;
+        }
     }
+
 }
