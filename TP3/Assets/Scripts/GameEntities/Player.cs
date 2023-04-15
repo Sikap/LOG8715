@@ -26,11 +26,17 @@ public class Player : NetworkBehaviour
         }
     }
 
-    private NetworkVariable<Vector2> m_Position = new NetworkVariable<Vector2>();
+    public struct Snapshot: INetworkSerializable
+    { 
+        public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter{}    
+        public Vector2 position;
+        public int tick;
+    }
+    private NetworkVariable<Snapshot> m_Position = new NetworkVariable<Snapshot>();
 
-    public Vector2 Position => m_Position.Value;
+    public Snapshot Position => m_Position.Value;
 
-    private Queue<Vector2> m_InputQueue = new Queue<Vector2>();
+    private Queue<Snapshot> m_InputQueue = new Queue<Snapshot>();
     public Queue<Vector2> localInputQueue = new Queue<Vector2>();
     public Vector2 localPosition;
     public  SnapshotInputArray inputSnapshot;
@@ -44,7 +50,7 @@ public class Player : NetworkBehaviour
     {
         if (IsClient)
         {
-            localPosition = Position;
+            localPosition = Position.position;
             inputSnapshot = new SnapshotInputArray(100);
             locationSnapshot = new SnapshotArray(100);
         }
@@ -68,66 +74,102 @@ public class Player : NetworkBehaviour
         if (IsClient && IsOwner)
         {           
             UpdateInputClient();
+            Debug.Log(
+                "UpdateInputClient: "
+                + "NetworkObjectId: " + NetworkObjectId
+                + "LocalTick: " + NetworkUtility.GetLocalTick()
+                + "LocalInput: " + localInputQueue.Peek().ToString()
+            );
             inputSnapshot.AddSnapshot(NetworkObjectId, NetworkUtility.GetLocalTick(), localInputQueue);
             
 
             localPrediction();
+            Debug.Log(
+                "LocalPrediction: "
+                + "NetworkObjectId: " + NetworkObjectId
+                + "LocalTick: " + NetworkUtility.GetLocalTick()
+                + "LocalPosition: " + localPosition
+            );
             locationSnapshot.AddSnapshot(NetworkObjectId, NetworkUtility.GetLocalTick(), localPosition);
             
-
             //Réconciliation avec serveur si ancienne prediction est fausse
-            Vector2 serverPosition = Position;
-            float delay =  m_GameState.CurrentRTT * NetworkUtility.GetLocalTickRate();
-            int serverTick = Mathf.RoundToInt(NetworkUtility.GetLocalTick() - delay);            
-            Vector2 correspondingTickLocalPosition = locationSnapshot.GetSnapshotValue(NetworkObjectId, serverTick);
+            Snapshot serverSnashot = Position;        
+            Vector2 correspondingTickLocalPosition = locationSnapshot.GetSnapshotValue(NetworkObjectId, serverSnashot.tick);
+            Debug.Log("correspondingTickLocalPosition : " + correspondingTickLocalPosition.ToString());
+            Debug.Log("serverSnashot : " + serverSnashot.position.ToString());
 
-            if(serverPosition != correspondingTickLocalPosition)
+            float distance = Vector2.Distance(serverSnashot.position, correspondingTickLocalPosition);  
+           
+            //Debug.Log("serverSnashot : " + serverSnashot.position.ToString());
+            //Debug.Log("Distance between serverPosition and correspondingTickLocalPosition : " + distance);
+            if(distance > 0.1)
             {
-                localPosition = serverPosition;
-                locationSnapshot.AddSnapshot(NetworkObjectId, serverTick, localPosition);
-                for(int i = 0; i <  Mathf.RoundToInt(delay); i++)
-                {
-                    localInputQueue = inputSnapshot.GetSnapshotValue(NetworkObjectId, (serverTick + 1 + i));
-                    localPrediction();
-                    locationSnapshot.AddSnapshot(NetworkObjectId, serverTick + 1 + i, localPosition);
-                }
-            }
+                localPosition = serverSnashot.position;
+                locationSnapshot.AddSnapshot(NetworkObjectId, serverSnashot.tick, localPosition);
 
+                int localTick =  NetworkUtility.GetLocalTick();
+                int tick = serverSnashot.tick;
+                //Debug.Log("LocalTick: " + localTick);
+                //Debug.Log("serverSnashotTick: " + tick);
+                /*  
+                while(tick < localTick);
+                {
+                    Debug.Log("ServerSnashotTick : " +  serverSnashot.tick);
+                    int i = 0;
+                    //localInputQueue = inputSnapshot.GetSnapshotValue(NetworkObjectId, serverSnashot.tick + 1 + i);
+                    //localPrediction();
+                    //locationSnapshot.AddSnapshot(NetworkObjectId, serverSnashot.tick + 1 + i, localPosition);
+                    tick++;
+                    i++;
+                }
+                */
+            }
         }
 
-        /*if (IsClient && !IsOwner)
-        {
-
-
-        }*/
     }
 
     private void UpdatePositionServer()
     {
+
         // Mise a jour de la position selon dernier input reçu, puis consommation de l'input
         if (m_InputQueue.Count > 0)
         {
-            var input = m_InputQueue.Dequeue();
-            m_Position.Value += input * m_Velocity * Time.deltaTime;
+            Snapshot input = m_InputQueue.Dequeue();                
+            Snapshot currentSnapshot = m_Position.Value; 
 
-            // Gestion des collisions avec l'exterieur de la zone de simulation
-            var size = GameState.GameSize;
-            if (m_Position.Value.x - m_Size < -size.x)
-            {
-                m_Position.Value = new Vector2(-size.x + m_Size, m_Position.Value.y);
-            }
-            else if (m_Position.Value.x + m_Size > size.x)
-            {
-                m_Position.Value = new Vector2(size.x - m_Size, m_Position.Value.y);
-            }
 
-            if (m_Position.Value.y + m_Size > size.y)
-            {
-                m_Position.Value = new Vector2(m_Position.Value.x, size.y - m_Size);
-            }
-            else if (m_Position.Value.y - m_Size < -size.y)
-            {
-                m_Position.Value = new Vector2(m_Position.Value.x, -size.y + m_Size);
+            if(currentSnapshot.tick < input.tick){
+                        
+                currentSnapshot.position += input.position * m_Velocity * Time.deltaTime; 
+                
+                // Gestion des collisions avec l'exterieur de la zone de simulation
+                var size = GameState.GameSize;
+                if (currentSnapshot.position.x - m_Size < -size.x)
+                {
+                    currentSnapshot.position =  new Vector2(-size.x + m_Size, currentSnapshot.position.y);
+                }
+                else if (currentSnapshot.position.x + m_Size > size.x)
+                {
+                    currentSnapshot.position = new Vector2(size.x - m_Size, currentSnapshot.position.y);
+                }
+
+                if (currentSnapshot.position.y + m_Size > size.y)
+                {
+                    currentSnapshot.position = new Vector2(currentSnapshot.position.x, size.y - m_Size);
+                }
+                else if (currentSnapshot.position.y - m_Size < -size.y)
+                {
+                    currentSnapshot.position = new Vector2(currentSnapshot.position.x, -size.y + m_Size);
+                }            
+                currentSnapshot.tick =  input.tick;
+                
+                Debug.Log("currentSnapshot position: " + currentSnapshot.position);
+                Debug.Log("currentSnapshot tick: " + currentSnapshot.tick);
+                
+                Debug.Log("input position: " + input.position);
+                Debug.Log("input tick: " + input.tick);
+
+                m_Position.Value = currentSnapshot; 
             }
         }
     }
@@ -180,18 +222,21 @@ public class Player : NetworkBehaviour
         if (Input.GetKey(KeyCode.D))
         {
             inputDirection += Vector2.right;
-        }
+        }        
+        //Debug.Log("input: " + inputDirection.normalized);
+        //Debug.Log("tick: " + NetworkUtility.GetLocalTick());
         localInputQueue.Enqueue(inputDirection.normalized);
-        
-        Debug.Log("SendInputServerRpc with senderId " + NetworkObjectId + " with tick " + NetworkUtility.GetLocalTick() +" with  input " + inputDirection.normalized);
-
-        SendInputServerRpc(NetworkObjectId, NetworkUtility.GetLocalTick(), inputDirection.normalized);
+        SendInputServerRpc(NetworkObjectId, inputDirection.normalized, NetworkUtility.GetLocalTick());
     }
 
     [ServerRpc]
-    private void SendInputServerRpc(ulong senderId, int localTick, Vector2 input)
+    private void SendInputServerRpc(ulong senderId, Vector2 inputDirection, int tick)
     {
         // On utilise une file pour les inputs pour les cas ou on en recoit plusieurs en meme temps.
+        //Debug.Log("senderId: " + senderId);
+        //Debug.Log("input: " + inputDirection.ToString());
+        //Debug.Log("tick: " + tick);
+        Snapshot input = new Snapshot { position = inputDirection, tick =tick };
         m_InputQueue.Enqueue(input);
     }
 }

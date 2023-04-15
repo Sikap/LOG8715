@@ -21,11 +21,12 @@ public class PlayerGhost : NetworkBehaviour
 
     private void Update()
     {
-        if(IsServer)
+        if(IsServer || (IsClient && !IsOwner))
         {
-            transform.position = m_Player.Position;
+            Player.Snapshot currentSnapshot = m_Player.Position;
+            transform.position = currentSnapshot.position;
         }
-        if(IsClient)
+        if(IsClient && IsOwner)
         {
             transform.position = m_Player.localPosition;
         }
