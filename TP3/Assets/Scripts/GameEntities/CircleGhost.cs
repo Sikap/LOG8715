@@ -7,7 +7,7 @@ public class CircleGhost : NetworkBehaviour
 {
     [SerializeField]
     private MovingCircle m_MovingCircle;
-    private  SnapshotArray snapshot;
+    private  SnapshotLocation snapshot;
     private CircleSpawner m_CircleSpawner;
     private GameState m_GameState;
     private Vector2 localPosition;
@@ -24,7 +24,7 @@ public class CircleGhost : NetworkBehaviour
     {
         if (IsClient)
         {
-            snapshot = new SnapshotArray((ulong)m_CircleSpawner.NbCircles);
+            snapshot = new SnapshotLocation(m_CircleSpawner.NbCircles);
             localPosition = m_MovingCircle.Position;
             localVelocity = m_MovingCircle.Velocity;
         }
@@ -56,7 +56,7 @@ public class CircleGhost : NetworkBehaviour
             //Prediction local + sauvgarde de la prediction.           
             //Debug.Log("Local prediction of NetworkObject " + NetworkObjectId + " for tick " + NetworkUtility.GetLocalTick());
             localPrediction();        
-            snapshot.AddSnapshot(NetworkObjectId, NetworkUtility.GetLocalTick(), localPosition);
+            snapshot.Add(localPosition, NetworkUtility.GetLocalTick());
             
             //Réconciliation avec serveur si ancienne prediction est fausse
             Vector2 serverPosition = m_MovingCircle.Position;
@@ -64,19 +64,19 @@ public class CircleGhost : NetworkBehaviour
             float delay =  (m_GameState.CurrentRTT/2) * NetworkUtility.GetLocalTickRate();
             int serverTick = Mathf.RoundToInt(NetworkUtility.GetLocalTick() - delay);            
 
-            Vector2 correspondingTickLocalPosition = snapshot.GetSnapshotValue(NetworkObjectId, serverTick);
+            Vector2 correspondingTickLocalPosition = snapshot.Get(serverTick);
 
             if(serverPosition != correspondingTickLocalPosition)
             {
                 localPosition = serverPosition;
                 localVelocity = m_MovingCircle.Velocity;        
                 //Debug.Log("NEED CORRECTION for NetworkObject " + NetworkObjectId + " for tick " + serverTick);    
-                snapshot.AddSnapshot(NetworkObjectId, serverTick, localPosition);
+                snapshot.Add(localPosition, serverTick);
                 for(int i = 0; i < delay; i++)
                 {
                     //Debug.Log("CORRECTION of NetworkObject " + NetworkObjectId + " for tick " +  (serverTick + 1 + i));    
                     localPrediction();
-                    snapshot.AddSnapshot(NetworkObjectId, serverTick + 1 + i, localPosition);
+                    snapshot.Add(localPosition, serverTick + 1 + i);
                 }
             }
         }
