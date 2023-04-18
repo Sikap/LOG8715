@@ -3,70 +3,51 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 
-public class SnapshotArray
+public class SnapshotLocation
 {
-    private Vector2[,] data;
-    private int maxTick = 120;
-    private ulong maxNetworkObjectId;
+    public Vector2[] data;
+    private int maxNumberOfSnapshots;
 
-    public int size { get => data.Length; }
-
-    public SnapshotArray(ulong numNetworkObjectId)
+    public SnapshotLocation(int max)
     {
-        // Create a new two-dimensional array to store the snapshot data
-        data = new Vector2[numNetworkObjectId, maxTick];
-        maxNetworkObjectId = numNetworkObjectId;
+        data = new Vector2[max];
+        maxNumberOfSnapshots = max;
     }
 
-    public void AddSnapshot(ulong networkObjectId, int tick, Vector2 value)
-    {
-        // Add the snapshot instance to the two-dimensional array at the appropriate index
-        data[networkObjectId % maxNetworkObjectId, tick % maxTick] = value;
+    public void Add(Vector2 position, int tick) {
+        data[tick % maxNumberOfSnapshots] = position;
     }
 
-    public Vector2 GetSnapshotValue(ulong networkObjectId, int tick)
-    {
-        // Get the snapshot instance from the two-dimensional array at the appropriate index
-        Vector2 snapshot = data[networkObjectId % maxNetworkObjectId, tick % maxTick];
-
-        // Return the Vector2 value from the snapshot instance
-        return snapshot;
+    public Vector2 Get(int tick) {
+        return data[tick % maxNumberOfSnapshots];
     }
 
+    public int Count() {
+        return data.Length;
+    }
 }
 
-public class SnapshotInputArray
+
+public class SnapshotInput
 {
-    private Queue<Vector2>[,] data;
-    private int maxTick = 120;
-    private ulong maxNetworkObjectId;
+    public Queue<Vector2>[] data;
+    private int maxNumberOfSnapshots;
 
-    public int size { get => data.Length; }
-
-    public SnapshotInputArray(ulong numNetworkObjectId)
+    public SnapshotInput(int max)
     {
-        // Create a new two-dimensional array of type Queue<Vector2> to store the snapshot data
-        data = new Queue<Vector2>[numNetworkObjectId, maxTick];
-        maxNetworkObjectId = numNetworkObjectId;
+        data = new Queue<Vector2>[max];
+        maxNumberOfSnapshots = max;
     }
 
-    public void AddSnapshot(ulong networkObjectId, int tick, Queue<Vector2> value)
-    {
-        // If there is no Queue<Vector2> instance in the data array at this index, create a new one
-        /*if (data[networkObjectId % maxNetworkObjectId, tick % maxTick] == null)
-        {
-            data[networkObjectId % maxNetworkObjectId, tick % maxTick] = new Queue<Vector2>();
-        }*/
-
-        // Add the snapshot value to the Queue<Vector2> instance at the appropriate index
-        data[networkObjectId % maxNetworkObjectId, tick % maxTick] = value;
+    public void Add(Queue<Vector2> inputs, int tick) {
+        data[tick % maxNumberOfSnapshots] = inputs;
     }
 
-    public Queue<Vector2> GetSnapshotValue(ulong networkObjectId, int tick)
-    {
-        // Get the Queue<Vector2> instance from the data array at the appropriate index
-        Queue<Vector2> snapshotQueue = data[networkObjectId % maxNetworkObjectId, tick % maxTick];
+    public Queue<Vector2> Get(int tick) {
+        return data[tick % maxNumberOfSnapshots];
+    }
 
-        return snapshotQueue;
+    public int Count() {
+        return data.Length;
     }
 }

@@ -23,12 +23,12 @@ public class PlayerGhost : NetworkBehaviour
     {
         if(IsServer || (IsClient && !IsOwner))
         {
-            Player.Snapshot currentSnapshot = m_Player.Position;
-            transform.position = currentSnapshot.position;
+            // Player.Snapshot currentSnapshot = m_Player.Position;
+            transform.position = m_Player.Position.vector;
         }
         if(IsClient && IsOwner)
         {
-            transform.position = m_Player.localPosition;
+            transform.position = m_Player.local_Position;
         }
     }
 
